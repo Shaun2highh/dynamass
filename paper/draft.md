@@ -100,7 +100,14 @@ incompatible with the survival of their own systems.
   libration center): survives; sweep yields i > 25° vs literature i ≳ 20°;
   random phases collapse survival to 12% — resonance protection is real
   and correctly handled.
-- [TODO: second anchor — HD 128311 or HD 45364.]
+
+### 4.1b HD 45364 anchor
+- Li et al. (2022) two-planet solution (3:2 period ratio, low
+  eccentricities): the published fit survives 10^5 yr with its own phases;
+  the survival cliff is smooth (100% at i ≥ 45°, zero by i ≈ 8.5°), giving
+  a 95% credible limit of m < 2.29× msini. Random phases leave survival at
+  100% — this fit is stable without phase protection, so the two anchors
+  bracket both regimes (phase-protected and phase-agnostic).
 
 ### 4.2 Depth convergence
 - 10^5 → 10^6 inner orbits: ceilings only tighten or hold (v1: 5

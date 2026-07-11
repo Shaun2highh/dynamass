@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 import zlib
 from concurrent.futures import ProcessPoolExecutor
+from functools import partial
 
 import numpy as np
 import pandas as pd
@@ -30,15 +31,18 @@ def inclination_sweep(
     seed: int = 0,
     verbose: bool = True,
     workers: int = 1,
+    run_kwargs: dict | None = None,
 ) -> pd.DataFrame:
     """Integrate n_draws phase realizations at each line-of-sight inclination.
 
     Returns one row per run: inclination, mass_factor, draw, survived,
     t_end_yr, reason. The (inclination, draw) grid is embarrassingly parallel;
-    pass workers > 1 to fan it out over processes.
+    pass workers > 1 to fan it out over processes. run_kwargs are forwarded to
+    run_one (sensitivity-analysis knobs).
     """
     if inclinations_deg is None:
         inclinations_deg = DEFAULT_INCLINATIONS
+    fn = partial(run_one, **run_kwargs) if run_kwargs else run_one
 
     specs = [
         (inc, inclination_deg_to_mass_factor(inc), draw, seed * 100_000 + int(inc * 100) + draw)
@@ -49,7 +53,7 @@ def inclination_sweep(
         with ProcessPoolExecutor(max_workers=workers) as pool:
             results = list(
                 pool.map(
-                    run_one,
+                    fn,
                     (system for _ in specs),
                     (factor for _, factor, _, _ in specs),
                     (t_max_yr for _ in specs),
@@ -58,7 +62,7 @@ def inclination_sweep(
             )
     else:
         results = [
-            run_one(system, factor, t_max_yr, seed=run_seed) for _, factor, _, run_seed in specs
+            fn(system, factor, t_max_yr, run_seed) for _, factor, _, run_seed in specs
         ]
 
     rows = [

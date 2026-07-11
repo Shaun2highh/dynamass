@@ -53,7 +53,13 @@ def build_sim(
     mass_factor: float,
     rng: np.random.Generator,
     sample_uncertainties: bool = True,
+    dt_scale: float = 1.0,
+    collision_r_scale: float = 1.0,
+    mutual_inc_sigma_deg: float = 0.0,
 ) -> rebound.Simulation:
+    """dt_scale / collision_r_scale / mutual_inc_sigma_deg exist for the
+    sensitivity analysis; defaults reproduce the survey configuration
+    (coplanar, Hill-radius collisions, dt = fastest perihelion / 20)."""
     sim = rebound.Simulation()
     sim.units = ("yr", "AU", "Msun")
     mstar = (
@@ -83,15 +89,20 @@ def build_sim(
             mean_anom = np.radians(p.mean_anom_deg)
         else:
             mean_anom = rng.uniform(0.0, 2.0 * np.pi)
-        sim.add(m=m, P=period_yr, e=ecc, omega=omega, M=mean_anom)
+        if mutual_inc_sigma_deg > 0.0:
+            inc = rng.rayleigh(np.radians(mutual_inc_sigma_deg))
+            node = rng.uniform(0.0, 2.0 * np.pi)
+        else:
+            inc, node = 0.0, 0.0
+        sim.add(m=m, P=period_yr, e=ecc, omega=omega, M=mean_anom, inc=inc, Omega=node)
         part = sim.particles[-1]
-        part.r = hill_radius_au(part.a, m, mstar)
+        part.r = hill_radius_au(part.a, m, mstar) * collision_r_scale
         dt_min = min(dt_min, period_yr * (1.0 - ecc) ** 1.5)
 
     sim.move_to_com()
     sim.integrator = "whfast"
     # Resolve the fastest perihelion passage among the planets.
-    sim.dt = dt_min * DT_FRACTION
+    sim.dt = dt_min * DT_FRACTION * dt_scale
     sim.collision = "direct"
     sim.collision_resolve = "halt"
     sim.exit_max_distance = ESCAPE_FACTOR * max(pt.a for pt in sim.particles[1:])
@@ -104,9 +115,20 @@ def run_one(
     t_max_yr: float,
     seed: int,
     sample_uncertainties: bool = True,
+    dt_scale: float = 1.0,
+    collision_r_scale: float = 1.0,
+    mutual_inc_sigma_deg: float = 0.0,
 ) -> RunResult:
     rng = np.random.default_rng(seed)
-    sim = build_sim(system, mass_factor, rng, sample_uncertainties=sample_uncertainties)
+    sim = build_sim(
+        system,
+        mass_factor,
+        rng,
+        sample_uncertainties=sample_uncertainties,
+        dt_scale=dt_scale,
+        collision_r_scale=collision_r_scale,
+        mutual_inc_sigma_deg=mutual_inc_sigma_deg,
+    )
     try:
         sim.integrate(t_max_yr, exact_finish_time=0)
     except rebound.Collision:

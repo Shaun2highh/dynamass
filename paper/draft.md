@@ -47,22 +47,49 @@ incompatible with the survival of their own systems.
 
 ## 1. Introduction
 
-- The m sin i degeneracy; population consequences (mass functions,
-  occurrence rates, brown-dwarf contamination).
-- Prior work and the gap:
-  - Tamayo, Gilbertson & Foreman-Mackey (2021): stability-constrained
-    characterization, single transiting system (Kepler-23) — method, not
-    survey (arXiv:2009.11831).
-  - Laskar & Petit (2017): AMD-stability classification of 131 systems —
-    population-scale but analytic and not inverted into mass limits
-    (arXiv:1703.07125).
-  - Volpi et al. (2019): 3D secular dynamics of 10 RV systems —
-    inclination constraints, secular theory, small sample
-    (arXiv:1905.03722).
-  - Single-system dynamical analyses (GJ 876; HD 10180; GJ 581; HD 41004)
-    — heterogeneous methods, no uniformity.
-- This work: one machine, every qualifying system, one statistical
-  definition, with validation.
+The radial-velocity method measures a planet's gravitational reflex along
+the line of sight only, leaving the orbital inclination i unconstrained
+and delivering the minimum mass m sin i rather than the mass. For an
+isotropic distribution of orientations the correction is usually modest —
+the median of 1/sin i is 1.15, and 95% of orientations imply a true mass
+below 3.2 m sin i — but for any individual planet the catalog value is a
+floor, not a measurement. The consequences propagate into everything
+built on RV masses: mass functions and occurrence rates inherit a
+one-sided bias, the planet/brown-dwarf boundary is porous for every giant
+whose 1/sin i could exceed ~13 M_Jup / (m sin i), and models of
+individual systems' formation and composition rest on lower limits
+treated, in practice, as values.
+
+In multi-planet systems, dynamics supplies the missing upper bound. A
+coplanar system tilted toward face-on hides planets that are heavier by
+1/sin i; heavier planets perturb one another more strongly; and
+sufficiently heavy versions destabilize on timescales far shorter than
+the systems' ages. Configurations that cannot survive to the present are
+excluded, so the survival requirement converts each system's continued
+existence into a ceiling on its planets' true masses. The idea is not
+new: discovery papers have long applied stability cuts to individual
+systems (GJ 876 being the canonical example), and Tamayo, Gilbertson &
+Foreman-Mackey (2021) developed stability-constrained characterization
+into a general method, applied to the transiting system Kepler-23. What
+does not exist is uniformity. Laskar & Petit (2017) classified 131
+systems by AMD-stability but did not invert stability into per-planet
+mass limits; Volpi et al. (2019) constrained mutual inclinations of ten
+RV systems with first-order secular theory; the remaining literature is a
+scatter of single-system analyses with mutually incompatible integrators,
+instability criteria, timescales, and statistical definitions. No two of
+their mass limits are comparable, and no population statement can be
+assembled from them.
+
+This paper presents the first homogeneous survey: one pipeline, one
+instability criterion, one statistical definition, applied to every
+qualifying multi-planet RV system in the NASA Exoplanet Archive, with
+orbital parameters sampled within their published uncertainties and the
+machinery validated against systems whose stability constraints are
+independently known. We report 95% credible true-mass limits under an
+isotropic orientation prior for the planets of 56 systems, a byproduct
+catalog of parameter-consistency flags, and — as a methodological
+contribution in its own right — three classes of catalog artifacts that
+dynamical auditing exposes (companion note).
 
 ## 2. Sample selection
 
@@ -155,12 +182,41 @@ incompatible with the survival of their own systems.
 
 ## 6. Discussion
 
-- Caveats: coplanarity, integration depth vs system age (mitigated by
-  monotone convergence), Hill-overlap proxy, catalog dependence.
-- The resonant block: path to phase-constrained sweeps via
-  single-reference fits.
-- Uses: prioritizing astrometric follow-up (Gaia DR4), cleaning mass
-  functions, brown-dwarf boundary demographics.
+Three limitations bound the interpretation of the catalog. First, the
+sweep is coplanar: the system is tilted as a rigid unit, so mutual
+inclinations enter only through the sensitivity variants (§3.2), which
+shift the credible limits by at most ~0.4 in the mass factor for
+dispersions up to 5°. Strongly non-coplanar architectures — precisely
+those the von Zeipel–Lidov–Kozai literature targets — are outside this
+survey's assumptions and their limits should be read as conditional on
+approximate coplanarity. Second, 10^6 inner orbits is short against Gyr
+ages. Every depth comparison we have run — three survey generations —
+moved limits monotonically tighter or not at all, so the reported
+ceilings are conservative: longer clocks can only strengthen them. The
+converse claim (that a surviving configuration is stable forever) is
+never made. Third, the inputs are catalog parameters, sampled within
+symmetrized published uncertainties rather than refit from radial
+velocities. The parameter-fragility flags quantify where this matters
+most; for the flagged systems the correct next step is a joint refit, not
+a mass limit.
+
+The excluded resonance-protected block (adjacent period ratios within a
+few percent of small-integer commensurabilities, screened out at
+selection) is addressable with the machinery validated on GJ 876:
+single-reference parameter sets carrying fit phases, initialized at the
+observed libration. Extending the survey across that block would add
+some of the most tightly packed — and therefore most constrainable —
+systems in the catalog.
+
+The catalog has immediate uses beyond its headline statement.
+Planets whose dynamical ceiling sits close to their m sin i floor are the
+best targets for Gaia astrometric confirmation, since their permitted
+mass range is narrowest; planets whose ceiling crosses the
+deuterium-burning limit are certified planetary without further
+observation, cleaning brown-dwarf contamination out of the giant-planet
+mass function; and the parameter-fragility flags hand RV teams a
+prioritized list of systems whose published solutions their own data no
+longer support.
 
 ## 7. Data availability
 

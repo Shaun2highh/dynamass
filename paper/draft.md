@@ -3,6 +3,26 @@
 *Draft skeleton — v1 numbers; [PROD] marks values to refresh from the
 20-draw production catalog (`results/survey_catalog_1e6_prod.csv`).*
 
+## Production numbers (2026-07-13, survey_catalog_1e6_prod.csv — use these for all [PROD] slots)
+
+- 56 systems surveyed (20 draws × 17 inclinations × 1e6 inner orbits); 0 failures.
+- Isotropic-prior baseline: with no dynamical information, 95% credibility
+  gives m < 3.20× msini for any RV planet. The survey's content is the
+  tightening *below* that.
+- **61 planets in 23 systems are dynamically tightened (m95 < 3.0×);
+  median 95% credible limit among them: 2.68× msini.**
+- 25 giants secured below 13 M_Jup at 95% credibility.
+- Parameter-fragility flags: GJ 667 C, HIP 57274, Kepler-20.
+- Depth convergence (1e5 → 1e6, 20 draws): 9 tightened, 0 loosened, 7 new
+  ceilings; third consecutive survey generation with monotone behavior.
+- Sensitivity (6 systems × 5 variants; results/sensitivity.csv): limits
+  shift ≤ 0.08 under dt/2 and collision radii ×0.5/×0.25; ≤ 0.4 under
+  Rayleigh mutual inclinations σ = 2°–5°.
+- Highlights: Barnard's star m95 = 2.18×; 47 UMa 2.35×; K2-18 c 2.87×
+  (≈ 21.6 M_earth); HD 141399 2.71×.
+- Anchors: GJ 876 i > 25° (lit. ≳ 20°, phase-protected); HD 45364
+  m95 = 2.29× (Li et al. 2022 fit, phase-agnostic).
+
 ## Abstract (draft)
 
 Radial-velocity detections constrain only the minimum mass m sin i of a

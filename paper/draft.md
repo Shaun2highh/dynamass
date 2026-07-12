@@ -93,43 +93,78 @@ dynamical auditing exposes (companion note).
 
 ## 2. Sample selection
 
-- NASA Exoplanet Archive pscomppars; ≥2 planets, all with periods and
-  masses; star mass known; ≥1 non-transiting Msini planet; adjacent period
-  ratio < 6. → 148 qualifying systems ranked by an analytic Hill-spacing
-  screen (f_crit; Gladman 1993 overlap criterion scaled by the swept mass
-  factor).
-- v1 band: f_crit ∈ (1.05, 60), e_max ≤ 0.75, P_inner ≥ 1.5 d → 56
-  systems. Resonance-protected block (f_crit ≈ 1) deferred to
-  phase-constrained treatment (§5.3).
-- Table 1: full disposition table (surveyed / flagged / excluded, with
-  reasons). [TODO: generate from targets.csv + catalog]
+We select systems from the NASA Exoplanet Archive's composite parameters
+table (pscomppars, accessed 2026 July 9–13) requiring at least two
+planets, periods and masses for all of them, a stellar mass, and at least
+one non-transiting planet whose mass provenance is Msini — the planets
+the survey can constrain. Because dynamical interactions weaken steeply
+with separation, we further require at least one adjacent pair with a
+period ratio below 6. This yields 148 qualifying systems.
+
+Each system is ranked by an analytic pre-estimate of where its ceiling
+should lie: the swept mass factor f_crit at which the most fragile
+adjacent pair, with masses scaled by f and separations measured in mutual
+Hill radii (eccentricity-reduced), reaches the two-planet overlap
+criterion Δ = 2√3 (Gladman 1993). Multi-planet systems destabilize at
+wider spacings, so f_crit is conservative. The survey band takes
+f_crit ∈ (1.05, 60) with e_max ≤ 0.75 and P_inner ≥ 1.5 d — 56 systems.
+The excluded f_crit ≈ 1 block is dominated by resonance-protected pairs
+whose survival depends on phase coherence that composite catalog
+parameters cannot supply (§3.4, §6); it is deferred rather than
+constrained. Table 1 [TODO: generate from targets.csv] gives the full
+disposition of all 148 systems.
 
 ## 3. Methods
 
 ### 3.1 Configuration sampling
-- Coplanar sweep: line-of-sight inclination i ∈ [5°, 90°], 17-point grid;
-  all Msini masses scale as 1/sin i; transiting/astrometric true masses
-  fixed.
-- Parameter draws: star mass, planet masses, periods, eccentricities,
-  periastron longitudes from symmetrized catalog 1σ errors (truncated
-  normals); unknown angles uniform. [PROD: 20] draws per grid point.
-- Phases: randomized for composite-catalog systems; derived from the fit's
-  time of periastron only for single-reference parameter sets (§3.4).
+
+A coplanar system tilted rigidly with respect to the line of sight leaves
+its internal dynamics unchanged while every Msini mass scales as 1/sin i;
+we therefore sweep i over a 17-point grid from 90° (edge-on, masses at
+their floors) to 5° (masses at 11.5× the floors), holding planets with
+transiting or astrometric true masses fixed. At each grid point we
+integrate 20 independent realizations, drawing the stellar mass and every
+planet's mass, period, eccentricity, and periastron longitude from
+truncated normal distributions built on the symmetrized catalog 1σ
+uncertainties (point values where errors are unreported; eccentricities
+truncated to [0, 0.95]). Unknown angles are drawn uniformly. Orbital
+phases are randomized for composite-catalog systems and taken from the
+fit's time of periastron only for single-reference parameter sets, for
+the reasons documented in §3.4.
 
 ### 3.2 Integration and instability criterion
-- REBOUND WHFast; dt = min over planets of P(1−e)^1.5/20; instability =
-  Hill-sphere overlap (collision radius = Hill radius) or escape (r > 20
-  a_max); t_max uniform in inner-planet orbits (10^5 and 10^6; convergence
-  in §4.2).
-- [TODO sensitivity subsection: dt/2, collision radius ×0.5/×0.25,
-  Rayleigh mutual inclinations σ = 2°, 5° on a representative subset.]
+
+Realizations are integrated with REBOUND's WHFast with timestep
+dt = min_p P_p (1−e_p)^{3/2} / 20, resolving the fastest perihelion
+passage. Instability is a close encounter within the sum of Hill radii
+(particles carry their Hill radius as collision radius) or escape beyond
+20 times the widest semi-major axis. Integration time is uniform in
+inner-planet orbits — 10^5 and 10^6 for the two survey depths — making
+the effort per system architecture-independent; convergence between the
+depths is examined in §4.2. Sensitivity of the final limits to these
+choices is quantified on a six-system representative subset spanning the
+survey's architectures: halving dt changes 95% credible limits by ≤ 0.03
+in the mass factor; collision radii scaled to 0.5× and 0.25× the Hill
+radius change them by ≤ 0.08; replacing exact coplanarity with mutual
+inclinations drawn from Rayleigh distributions of σ = 2° and 5° changes
+them by ≤ 0.4 (results/sensitivity.csv). None approaches the survey's
+grid resolution in i.
 
 ### 3.3 Statistical definitions
-- Survival curve S(i); parameter-fragility flag if S(edge-on) < 0.5
-  (consistency result, not a mass limit).
-- Threshold ceiling: smallest factor with S < 0.5 × S(edge-on).
-- Primary statistic: 95% credible mass limit under isotropic prior
-  (uniform in cos i), posterior ∝ S(i) d(cos i).
+
+Each system yields a survival curve S(i), the fraction of realizations
+surviving to t_max at inclination i. Because parameter draws can be
+fragile at any tilt, constraints are defined relative to the edge-on
+baseline: systems with S(90°) < 0.5 are reported as
+parameter-consistency flags — statements about the published parameters,
+not mass limits. For unflagged systems the primary statistic is the 95%
+credible limit on the mass factor under an isotropic orientation prior
+(uniform in cos i), with posterior density proportional to S(i): the
+factor below which 95% of the surviving posterior lies. With no
+dynamical information this limit is 3.20 for every RV planet; the
+survey's information content is the tightening below that value. A
+secondary threshold ceiling (smallest factor with S < 0.5 × S(90°)) is
+tabulated for comparison with prior single-system work.
 
 ### 3.4 Catalog-artifact classes found and guarded
 1. Eccentricity point-estimates dynamically inconsistent with system
@@ -164,21 +199,41 @@ dynamical auditing exposes (companion note).
 ## 5. Results
 
 ### 5.1 The catalog
-- [PROD] planets with 95% credible limits; median factor [PROD];
-  headline figure: floor_vs_ceiling (msini dot → ceiling tick, deuterium
-  line).
-- Notable systems: K2-18 c (< 2.4× msini ≈ [PROD] M_earth); Barnard's
-  star (all four < 2.4× msini); Kepler-20 g; nine giants secured below
-  13 M_Jup.
+
+Of the 56 surveyed systems, 53 pass the edge-on consistency test and
+yield 95% credible mass limits for 123 non-transiting planets. Sixty-one
+planets in 23 systems are dynamically tightened below 3.0× their minimum
+masses — meaningfully inside the 3.20× that isotropy alone guarantees —
+with a median limit of 2.68× among them (Figure: floor_vs_ceiling_final).
+Twenty-five giants whose face-on orientations would have exceeded the
+deuterium-burning limit are certified planetary at 95% credibility.
+Individual highlights: Barnard's star's four sub-Earths are capped at
+2.18× their minimum masses; 47 UMa at 2.35×; HD 141399's four giants at
+2.71×; and K2-18 c, the non-transiting companion of the habitable-zone
+sub-Neptune K2-18 b, at 2.87× ≈ 21.6 M_earth, excluding a giant-planet
+identity.
 
 ### 5.2 Population statement
-- Cumulative distribution of credible mass factors; comparison with the
-  isotropic-prior expectation (what fraction of the sin-i tail dynamics
-  removes). [TODO figure]
+
+The cumulative distribution of credible limits (Figure: m95_cdf_prod)
+answers the survey's title question: exactly half the qualifying planets
+have their permitted mass range tightened beyond geometry, the tightest
+fifth to below ~2.6×, and none of the 123 limits exceeds the isotropic
+bound — dynamics only ever removes orientations. Read as demographics:
+for packed multi-planet RV systems, the "hidden monster" tail of the
+minimum-mass distribution is largely a geometric fiction; the surviving
+configurations concentrate near edge-on masses.
 
 ### 5.3 Parameter-fragility flags
-- 47 UMa, GJ 667 C, HD 107148: catalog parameters unstable at any tilt in
-  ≥ half of draws — dynamical consistency as a data-quality audit.
+
+Three systems fail the edge-on consistency test in more than half their
+parameter draws: GJ 667 C, HIP 57274, and Kepler-20. These are
+data-quality results, not mass limits: the published parameter sets, with
+their stated uncertainties, do not support long-lived configurations at
+any tilt. For GJ 667 C this echoes the long-standing dispute over its
+planet multiplicity; for the others it flags eccentricity solutions that
+their own dynamics reject. A joint dynamical–RV refit is the indicated
+follow-up in all three cases.
 
 ## 6. Discussion
 
@@ -225,11 +280,11 @@ longer support.
 
 ## Figures (current files)
 
-1. Survival curve example (47 UMa v0 / GJ 876 validation) —
-   `results/gj_876_validation.png`
-2. Floor vs ceiling dumbbells — `results/floor_vs_ceiling_1e6_v1.png`
-   [PROD refresh; exclude flagged systems]
-3. Depth convergence — `results/depth_convergence_v1.png` [PROD refresh]
-4. [TODO] Cumulative distribution of credible mass factors
-5. [TODO] Barnard eccentricity artifact illustration (catalog-e vs e=0
-   survival vs sampled)
+1. Survival curve example / validation — `results/gj_876_validation.png`,
+   `results/hd_45364_validation.png`
+2. Floor vs ceiling dumbbells (95% credible, flags excluded) —
+   `results/floor_vs_ceiling_final.png`
+3. Depth convergence (production) — `results/depth_convergence_prod.png`
+4. Cumulative distribution of credible limits — `results/m95_cdf_prod.png`
+5. Barnard eccentricity artifact (three treatments) —
+   `results/note_fig1_barnard.png` (shared with the companion note)

@@ -1,7 +1,9 @@
 # Dynamical Stability Audits Expose Three Classes of Parameter Artifacts in Exoplanet Catalogs
 
-*Target: AAS Research Notes (≤1000 words, 1 figure). Draft 1, 2026-07-13.*
-*Author: Shaurya Ranjan. [AI-assistance disclosure per journal policy.]*
+*Target: AAS Research Notes (≤1000 words, 1 figure).*
+*CANONICAL SUBMISSION FILE: `note_catalog_artifacts.tex` (polished 2026-07-13;
+626 body words). This markdown is the reading copy and may lag it.
+Submission steps: `paper/SUBMIT.md`.*
 
 Aggregated exoplanet catalogs — above all the NASA Exoplanet Archive —
 are the de facto input for population studies, dynamical analyses, and

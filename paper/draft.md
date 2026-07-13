@@ -111,8 +111,11 @@ f_crit ∈ (1.05, 60) with e_max ≤ 0.75 and P_inner ≥ 1.5 d — 56 systems.
 The excluded f_crit ≈ 1 block is dominated by resonance-protected pairs
 whose survival depends on phase coherence that composite catalog
 parameters cannot supply (§3.4, §6); it is deferred rather than
-constrained. Table 1 [TODO: generate from targets.csv] gives the full
-disposition of all 148 systems.
+constrained. Table 1 (`paper/table1_dispositions.csv`, machine-generated
+by `scripts/make_table1.py`) gives the full disposition of all 148
+systems: 53 surveyed, 3 flagged, and 92 excluded (42 resonance-protected,
+48 too weakly interacting for dynamics to bite at any allowed mass, and 9
+with sub-1.5-day inner periods, categories overlapping).
 
 ## 3. Methods
 
@@ -277,6 +280,14 @@ longer support.
 
 - Code: github.com/[TODO] (dynamass). Catalogs + per-run records archived
   at Zenodo [TODO DOI]. NASA Exoplanet Archive accessed 2026-07-09..12.
+
+## Tables
+
+1. System dispositions (148 rows: surveyed / flagged / excluded + reason,
+   edge-on survival, m95) — `paper/table1_dispositions.csv`, regenerate
+   with `scripts/make_table1.py`.
+2. [TODO] Per-planet catalog excerpt for the journal (full machine-readable
+   version: `results/survey_catalog_1e6_prod.csv`).
 
 ## Figures (current files)
 

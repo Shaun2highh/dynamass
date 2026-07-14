@@ -1,7 +1,8 @@
 # Dynamics as a Scale: A Homogeneous Survey of Stability-Derived True-Mass Limits for Non-Transiting Radial-Velocity Exoplanets
 
-*Draft skeleton — v1 numbers; [PROD] marks values to refresh from the
-20-draw production catalog (`results/survey_catalog_1e6_prod.csv`).*
+*Draft v2 (2026-07-14) — all numbers refreshed from the 20-draw production
+catalog (`results/survey_catalog_1e6_prod.csv`) and re-verified against it;
+remaining [TODO]s: Zenodo DOI, Table 2 excerpt, 10^7-orbit extension.*
 
 ## Production numbers (2026-07-13, survey_catalog_1e6_prod.csv — use these for all [PROD] slots)
 
@@ -32,15 +33,16 @@ bounds that factor: heavier, more face-on configurations perturb their
 neighbors strongly enough to self-destruct within the system's lifetime.
 Discovery papers occasionally apply this constraint to individual systems
 with heterogeneous methods; no uniform survey exists. We present a
-homogeneous N-body stability survey of [PROD: 56] multi-planet RV systems
+homogeneous N-body stability survey of 56 multi-planet RV systems
 drawn from the NASA Exoplanet Archive, sweeping each system's line-of-sight
 inclination and sampling all orbital parameters within their published
 uncertainties. We validate the pipeline against GJ 876, recovering the
 literature stability constraint (i > 25 deg vs. published i ≳ 20 deg). We
 report 95% credible true-mass upper limits under an isotropic orientation
-prior for [PROD: 61] planets in [PROD: 25] systems, with a median limit of
-[PROD: ~4.8]× the minimum mass, and certify [PROD: 9] giant planets below
-the deuterium-burning limit by dynamics alone. As a byproduct, the survey
+prior for 123 planets in 53 systems: 61 planets in 23 systems are
+tightened below 3.0 times their minimum masses (median limit 2.68× among
+them), and 25 giant planets are certified below the deuterium-burning
+limit by dynamics alone. As a byproduct, the survey
 identifies three classes of catalog-parameter artifacts that dynamical
 consistency exposes, including published eccentricity point-estimates
 incompatible with the survival of their own systems.
@@ -89,7 +91,8 @@ independently known. We report 95% credible true-mass limits under an
 isotropic orientation prior for the planets of 56 systems, a byproduct
 catalog of parameter-consistency flags, and — as a methodological
 contribution in its own right — three classes of catalog artifacts that
-dynamical auditing exposes (companion note).
+dynamical auditing exposes (companion note, submitted to RNAAS 2026
+July 14).
 
 ## 2. Sample selection
 
@@ -195,8 +198,10 @@ tabulated for comparison with prior single-system work.
   bracket both regimes (phase-protected and phase-agnostic).
 
 ### 4.2 Depth convergence
-- 10^5 → 10^6 inner orbits: ceilings only tighten or hold (v1: 5
-  tightened, 0 loosened, 8 new); Figure: depth_convergence_v1.png.
+- 10^5 → 10^6 inner orbits (production, flagged systems excluded):
+  ceilings only tighten or hold — 9 tightened, 0 loosened, 5 unchanged,
+  7 new ceilings at depth; third consecutive survey generation with
+  monotone behavior. Figure: depth_convergence_prod.png.
 - [TODO: 10^7-orbit extension for the non-converged subset.]
 
 ## 5. Results
@@ -220,9 +225,12 @@ identity.
 
 The cumulative distribution of credible limits (Figure: m95_cdf_prod)
 answers the survey's title question: exactly half the qualifying planets
-have their permitted mass range tightened beyond geometry, the tightest
-fifth to below ~2.6×, and none of the 123 limits exceeds the isotropic
-bound — dynamics only ever removes orientations. Read as demographics:
+(61 of 123) have their permitted mass range tightened beyond geometry,
+the tightest fifth to below ~2.6×, and no limit exceeds the isotropic
+bound beyond the inclination grid's discretization (the single nominal
+exception, TOI-1062 c at 3.22× against the analytic 3.20×, is an
+unconstrained posterior rendered on the 17-point grid) — dynamics only
+ever removes orientations. Read as demographics:
 for packed multi-planet RV systems, the "hidden monster" tail of the
 minimum-mass distribution is largely a geometric fiction; the surviving
 configurations concentrate near edge-on masses.
@@ -278,8 +286,10 @@ longer support.
 
 ## 7. Data availability
 
-- Code: github.com/[TODO] (dynamass). Catalogs + per-run records archived
-  at Zenodo [TODO DOI]. NASA Exoplanet Archive accessed 2026-07-09..12.
+- Code: https://github.com/Shaun2highh/dynamass. Catalogs + per-run
+  records archived at Zenodo [TODO DOI — mint after RNAAS note acceptance].
+  NASA Exoplanet Archive (pscomppars DOI: 10.26133/NEA13, ps DOI:
+  10.26133/NEA12) accessed 2026 July 9–13.
 
 ## Tables
 

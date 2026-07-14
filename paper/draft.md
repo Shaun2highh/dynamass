@@ -147,7 +147,7 @@ passage. Instability is a close encounter within the sum of Hill radii
 20 times the widest semi-major axis. Integration time is uniform in
 inner-planet orbits — 10^5 and 10^6 for the two survey depths — making
 the effort per system architecture-independent; convergence between the
-depths is examined in §4.2. Sensitivity of the final limits to these
+depths is examined in §4.3. Sensitivity of the final limits to these
 choices is quantified on a six-system representative subset spanning the
 survey's architectures: halving dt changes 95% credible limits by ≤ 0.03
 in the mass factor; collision radii scaled to 0.5× and 0.25× the Hill
@@ -183,26 +183,66 @@ tabulated for comparison with prior single-system work.
 
 ## 4. Validation
 
-### 4.1 GJ 876 anchor
-- Rivera et al. (2010) coplanar fit (Table 3 elements, phases at the
-  libration center): survives; sweep yields i > 25° vs literature i ≳ 20°;
-  random phases collapse survival to 12% — resonance protection is real
-  and correctly handled.
+The pipeline is validated against two systems whose stability constraints
+are independently known, chosen to bracket the two dynamical regimes the
+survey encounters: a resonance-protected system whose survival depends on
+its orbital phases (GJ 876) and a near-resonant system that is stable
+regardless of them (HD 45364).
 
-### 4.1b HD 45364 anchor
-- Li et al. (2022) two-planet solution (3:2 period ratio, low
-  eccentricities): the published fit survives 10^5 yr with its own phases;
-  the survival cliff is smooth (100% at i ≥ 45°, zero by i ≈ 8.5°), giving
-  a 95% credible limit of m < 2.29× msini. Random phases leave survival at
-  100% — this fit is stable without phase protection, so the two anchors
-  bracket both regimes (phase-protected and phase-agnostic).
+### 4.1 GJ 876: the phase-protected anchor
 
-### 4.2 Depth convergence
-- 10^5 → 10^6 inner orbits (production, flagged systems excluded):
-  ceilings only tighten or hold — 9 tightened, 0 loosened, 5 unchanged,
-  7 new ceilings at depth; third consecutive survey generation with
-  monotone behavior. Figure: depth_convergence_prod.png.
-- [TODO: 10^7-orbit extension for the non-converged subset.]
+GJ 876 is the canonical stability-constrained system. The Archive's
+default solution is the coplanar dynamical fit of Rivera et al. (2010) at
+i = 59°: true masses, with the phases of the 4:2:1 Laplace resonance at
+their libration center. We reconstruct the equivalent minimum-mass system
+by scaling the fitted masses by sin 59°, fix the mean anomalies at the
+fit epoch to the published values (their Table 3 — the Archive's
+time-of-periastron column stores the epoch itself for this reference,
+artifact Class 3 of §3.4, so phases cannot be derived from it), and sweep
+a 13-point inclination grid with phases held fixed (5 draws per point,
+5,000 yr per realization ≈ 10^6 inner-planet orbits).
+
+The validation makes three independent demands. First, the published
+configuration, entering the sweep at mass factor 1/sin 59° = 1.17, must
+survive: it does. Second, the recovered constraint must match the
+literature: survival is zero at every grid inclination at or below 25°
+and recovers above it, giving i > 25° (m < 2.37× msini) against the
+published i ≳ 20° — consistent, and conservative in the safe direction.
+Third, the same masses with randomized phases must not reliably survive,
+or phase protection would be irrelevant to the problem: survival
+collapses to 12%. The resonance protection is real, and the
+phase-constrained initialization captures it.
+
+### 4.2 HD 45364: the phase-agnostic anchor
+
+HD 45364 anchors the opposite regime. Its two giants sit in a 3:2
+commensurability with low eccentricities, and the Li et al. (2022)
+solution is stable without phase assistance: initialized with the fit's
+own phases, the published configuration survives the full 10^5 yr
+integration, and randomizing the phases leaves survival at 100% — the
+constraint owes nothing to resonance protection. The survival cliff is
+correspondingly smooth rather than resonance-sharpened: complete survival
+for i ≥ 45°, declining to zero by i ≈ 8.5° (17-point grid, 10 draws per
+point), integrating under the isotropic prior to a 95% credible limit of
+m < 2.29× msini. Together the anchors bracket the survey population — one
+ceiling that exists because of its phases, one indifferent to them — and
+the same pipeline recovers both with no per-system tuning.
+
+### 4.3 Depth convergence
+
+A survey whose limits depended on integration length would be reporting
+its clock, not the dynamics. Every system therefore runs at two depths,
+10^5 and 10^6 inner orbits, with identical parameter draws (seeds keyed
+to the system name), and the threshold ceilings are compared. Deeper
+integration can only reveal instability, never undo it, so ceilings must
+move one way — and they do: among the 53 unflagged systems (flagged
+systems excluded at either depth), 9 ceilings tightened, 5 held exactly,
+none loosened, and 7 systems acquired a ceiling only at 10^6 (Figure:
+depth_convergence_prod.png). This is the third consecutive survey
+generation with strictly monotone behavior, and it is what makes the
+reported limits conservative: a longer clock can only strengthen them
+(§6). [PENDING: 10^7-orbit extension of the 16 non-converged systems —
+run launched 2026-07-14, results/survey_catalog_1e7_prod.csv.]
 
 ## 5. Results
 

@@ -296,8 +296,11 @@ longer support.
 1. System dispositions (148 rows: surveyed / flagged / excluded + reason,
    edge-on survival, m95) — `paper/table1_dispositions.csv`, regenerate
    with `scripts/make_table1.py`.
-2. [TODO] Per-planet catalog excerpt for the journal (full machine-readable
-   version: `results/survey_catalog_1e6_prod.csv`).
+2. Per-planet true-mass limits (123 rows: msini, 95% credible factor and
+   mass, threshold ceiling, inclination floor; sorted tightest-first) —
+   `paper/table2_planet_limits.csv`, regenerate with
+   `scripts/make_table2.py`. Journal excerpt: the ~10 tightest rows;
+   full machine-readable version from `results/survey_catalog_1e6_prod.csv`.
 
 ## Figures (current files)
 

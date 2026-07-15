@@ -259,7 +259,12 @@ Individual highlights: Barnard's star's four sub-Earths are capped at
 2.18× their minimum masses; 47 UMa at 2.35×; HD 141399's four giants at
 2.71×; and K2-18 c, the non-transiting companion of the habitable-zone
 sub-Neptune K2-18 b, at 2.87× ≈ 21.6 M_earth, excluding a giant-planet
-identity.
+identity. The tightest factor in the catalog is a caution against
+conflating the two headline statistics: TYC 1422-614-1's pair is capped
+at 2.01× — the survey's strongest relative constraint — yet planet c's
+minimum mass of 10 M_Jup puts even that ceiling at ≈20 M_Jup, above the
+deuterium-burning limit. A tight mass factor and a certified planetary
+identity are independent properties.
 
 ### 5.2 Population statement
 

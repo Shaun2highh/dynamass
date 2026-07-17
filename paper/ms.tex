@@ -35,11 +35,10 @@ $i \gtrsim 20\arcdeg$). We report 95\% credible true-mass upper limits
 under an isotropic orientation prior for 123 planets in 53 systems: 61
 planets in 23 systems are tightened below 3.0 times their minimum masses
 (median limit $2.68\times$ among them), and 25 giant planets are
-certified below the deuterium-burning limit by dynamics alone. As a
-byproduct, the survey identifies three classes of catalog-parameter
-artifacts that dynamical consistency exposes, including published
-eccentricity point-estimates incompatible with the survival of their own
-systems.
+certified below the deuterium-burning limit by dynamics alone. The pipeline additionally documents, and guards
+against, three classes of catalog-parameter pitfalls that dynamical
+consistency exposes, including published eccentricity point-estimates
+incompatible with the survival of their own systems.
 \end{abstract}
 
 % TODO: verify UAT concept numbers at submission
@@ -69,13 +68,17 @@ the systems' ages. Configurations that cannot survive to the present are
 excluded, so the survival requirement converts each system's continued
 existence into a ceiling on its planets' true masses. The idea is not
 new: discovery papers have long applied stability cuts to individual
-systems (GJ~876 being the canonical example), and
+systems (GJ~876 being the canonical example; e.g.,
+\citealt{Gozdziewski2002} for 47~UMa; \citealt{Vogt2014} for HD~141399;
+\citealt{Basant2025} for Barnard's star), and
 \citet{Tamayo2021} developed stability-constrained characterization into
 a general method, applied to the transiting system Kepler-23. What does
 not exist is uniformity. \citet{LaskarPetit2017} classified 131 systems
 by AMD-stability but did not invert stability into per-planet mass
 limits; \citet{Volpi2019} constrained mutual inclinations of ten RV
-systems with first-order secular theory; the remaining literature is a
+systems with first-order secular theory; \citet{Qin2025} propose
+breaking the degeneracy through von Zeipel--Lidov--Kozai cycle
+monitoring in compact binaries; the remaining literature is a
 scatter of single-system analyses with mutually incompatible integrators,
 instability criteria, timescales, and statistical definitions. No two of
 their mass limits are comparable, and no population statement can be
@@ -89,9 +92,8 @@ machinery validated against systems whose stability constraints are
 independently known. We report 95\% credible true-mass limits under an
 isotropic orientation prior for the planets of 56 systems, a byproduct
 catalog of parameter-consistency flags, and --- as a methodological
-contribution in its own right --- three classes of catalog artifacts that
-dynamical auditing exposes (companion note, submitted to RNAAS 2026
-July 14).
+contribution in its own right --- three classes of catalog-parameter
+pitfalls that dynamical auditing exposes (\S\ref{sec:artifacts}).
 
 \section{Sample Selection} \label{sec:sample}
 
@@ -176,23 +178,27 @@ that value. A secondary threshold ceiling (smallest factor with
 $S < 0.5 \times S(90\arcdeg)$) is tabulated for comparison with prior
 single-system work.
 
-\subsection{Catalog-Artifact Classes Found and Guarded}
+\subsection{Catalog-Parameter Pitfalls Guarded Against}
 \label{sec:artifacts}
 
-Three recurring artifact classes in catalog parameters, each diagnosed
-because it broke a real analysis in this survey, are documented in detail
-in the companion note; the survey guards against all three.
+Three recurring pitfalls in catalog parameters, each encountered because
+it broke an analysis during survey development, are guarded against as
+follows.
 
 \begin{enumerate}
 \item Eccentricity point-estimates dynamically inconsistent with system
 survival (Barnard's star: $e = 0.03$--$0.08$ kills the system in kyr;
-$e$ drawn within errors resolves it).
+$e$ drawn within errors resolves it --- independently established by
+\citealt{Basant2025}, whose fits favor $e < 0.02$). Guard: sample within
+uncertainties, never integrate point values alone (\S\ref{sec:sampling}).
 \item Composite tables (\texttt{pscomppars}) mix parameters across
 incompatible fits --- fatal for phase-coherent (resonant)
-initialization.
+initialization. Guard: randomize phases for composite parameters; use
+fit phases only from single-reference sets (\S\ref{sec:sampling}).
 \item Fit epochs stored in the time-of-periastron column
-\citep[GJ~876;][]{Rivera2010}, producing degenerate
-all-simultaneous-periastron phases.
+\citep[GJ~876;][]{Rivera2010}: read naively, the column implies all
+planets at periastron simultaneously. Guard: reject identical periastron
+times across a system before using any phase information.
 \end{enumerate}
 
 \section{Validation} \label{sec:validation}
@@ -201,7 +207,9 @@ The pipeline is validated against two systems whose stability constraints
 are independently known, chosen to bracket the two dynamical regimes the
 survey encounters: a resonance-protected system whose survival depends on
 its orbital phases (GJ~876) and a near-resonant system that is stable
-regardless of them (HD~45364).
+regardless of them (HD~45364). A third, external cross-check appears in
+\S\ref{sec:catalog}: for Barnard's star, the survey's ceilings agree with
+the independent stability-derived masses of \citet{Byrne2026}.
 
 \subsection{GJ 876: The Phase-Protected Anchor} \label{sec:gj876}
 
@@ -276,10 +284,16 @@ guarantees --- with a median limit of $2.68\times$ among them.
 Twenty-five giants whose face-on orientations would have exceeded the
 deuterium-burning limit are certified planetary at 95\% credibility.
 Individual highlights: Barnard's star's four sub-Earths are capped at
-$2.18\times$ their minimum masses; 47~UMa at $2.35\times$; HD~141399's
-four giants at $2.71\times$; and K2-18~c, the non-transiting companion of
-the habitable-zone sub-Neptune K2-18~b, at $2.87\times \approx
-21.6\,\mearth$, excluding a giant-planet identity. The tightest factor in
+$2.18\times$ their minimum masses (0.42--0.73\,$\mearth$) --- consistent
+with, and independently confirming, the stability-derived masses of
+0.19--0.84\,$\mearth$ in \citet{Byrne2026}; 47~UMa at $2.35\times$;
+HD~141399's four giants at $2.71\times$; and K2-18~c, the non-transiting
+companion of the habitable-zone sub-Neptune K2-18~b, at
+$2.87\times \approx 21.6\,\mearth$, excluding a giant-planet identity.
+(The isotropic prior is conservative for K2-18~c: because K2-18~b
+transits, only a small mutual inclination is required for c to avoid
+transiting, so near-edge-on orientations are likely a priori;
+\citealt{Cloutier2017}.) The tightest factor in
 the catalog is a caution against conflating the two headline statistics:
 TYC~1422-614-1's pair is capped at $2.01\times$ --- the survey's
 strongest relative constraint --- yet planet~c's minimum mass of
@@ -470,12 +484,23 @@ the secondary threshold ceiling, and the inclination floor.}
 % ------------------------------------------------------------- references
 
 \begin{thebibliography}{}
+% TODO: fill ApJL volume/page for Basant2025 and Qin2025 at submission
+\bibitem[Basant et al.(2025)]{Basant2025} Basant, R., Luque, R., Bean,
+J.~L., et al. 2025, ApJL, doi:10.3847/2041-8213/adb8d5
+\bibitem[Byrne et al.(2026)]{Byrne2026} Byrne, X., Guimond, C.~M.,
+Bonsor, A., et al. 2026, MNRAS, accepted (arXiv:2606.23310)
+\bibitem[Cloutier et al.(2017)]{Cloutier2017} Cloutier, R.,
+Astudillo-Defru, N., Doyon, R., et al. 2017, A\&A, 608, A35
 \bibitem[Correia et al.(2009)]{Correia2009} Correia, A.~C.~M., Udry, S.,
 Mayor, M., et al. 2009, A\&A, 496, 521
+\bibitem[Go\'zdziewski(2002)]{Gozdziewski2002} Go\'zdziewski, K. 2002,
+A\&A, 393, 997
 \bibitem[Gladman(1993)]{Gladman1993} Gladman, B. 1993, Icarus, 106, 247
 \bibitem[Laskar \& Petit(2017)]{LaskarPetit2017} Laskar, J., \& Petit,
 A.~C. 2017, A\&A, 605, A72
 \bibitem[Li et al.(2022)]{Li2022} Li, Z., et al. 2022, AJ, 164, 163
+\bibitem[Qin et al.(2025)]{Qin2025} Qin, Z., Liu, S.-F., \& Ma, B. 2025,
+ApJL, doi:10.3847/2041-8213/adea69
 \bibitem[Rein \& Liu(2012)]{ReinLiu2012} Rein, H., \& Liu, S.-F. 2012,
 A\&A, 537, A128
 \bibitem[Rein \& Tamayo(2015)]{ReinTamayo2015} Rein, H., \& Tamayo, D.
@@ -484,6 +509,8 @@ A\&A, 537, A128
 Butler, R.~P., et al. 2010, ApJ, 719, 890
 \bibitem[Tamayo et al.(2021)]{Tamayo2021} Tamayo, D., Gilbertson, C., \&
 Foreman-Mackey, D. 2021, MNRAS, 501, 4798
+\bibitem[Vogt et al.(2014)]{Vogt2014} Vogt, S.~S., et al. 2014, ApJ,
+787, 97
 \bibitem[Volpi et al.(2019)]{Volpi2019} Volpi, M., Roisin, A., \& Libert,
 A.-S. 2019, A\&A, 626, A74
 \end{thebibliography}

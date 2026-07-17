@@ -42,8 +42,8 @@ report 95% credible true-mass upper limits under an isotropic orientation
 prior for 123 planets in 53 systems: 61 planets in 23 systems are
 tightened below 3.0 times their minimum masses (median limit 2.68× among
 them), and 25 giant planets are certified below the deuterium-burning
-limit by dynamics alone. As a byproduct, the survey
-identifies three classes of catalog-parameter artifacts that dynamical
+limit by dynamics alone. The pipeline additionally documents, and guards
+against, three classes of catalog-parameter pitfalls that dynamical
 consistency exposes, including published eccentricity point-estimates
 incompatible with the survival of their own systems.
 
@@ -70,13 +70,17 @@ the systems' ages. Configurations that cannot survive to the present are
 excluded, so the survival requirement converts each system's continued
 existence into a ceiling on its planets' true masses. The idea is not
 new: discovery papers have long applied stability cuts to individual
-systems (GJ 876 being the canonical example), and Tamayo, Gilbertson &
+systems (GJ 876 being the canonical example; e.g., Goździewski 2002 for
+47 UMa; Vogt et al. 2014 for HD 141399; Basant et al. 2025 for Barnard's
+star), and Tamayo, Gilbertson &
 Foreman-Mackey (2021) developed stability-constrained characterization
 into a general method, applied to the transiting system Kepler-23. What
 does not exist is uniformity. Laskar & Petit (2017) classified 131
 systems by AMD-stability but did not invert stability into per-planet
 mass limits; Volpi et al. (2019) constrained mutual inclinations of ten
-RV systems with first-order secular theory; the remaining literature is a
+RV systems with first-order secular theory; Qin et al. (2025) propose
+breaking the degeneracy through von Zeipel–Lidov–Kozai cycle monitoring
+in compact binaries; the remaining literature is a
 scatter of single-system analyses with mutually incompatible integrators,
 instability criteria, timescales, and statistical definitions. No two of
 their mass limits are comparable, and no population statement can be
@@ -90,9 +94,8 @@ machinery validated against systems whose stability constraints are
 independently known. We report 95% credible true-mass limits under an
 isotropic orientation prior for the planets of 56 systems, a byproduct
 catalog of parameter-consistency flags, and — as a methodological
-contribution in its own right — three classes of catalog artifacts that
-dynamical auditing exposes (companion note, submitted to RNAAS 2026
-July 14).
+contribution in its own right — three classes of catalog-parameter
+pitfalls that dynamical auditing exposes (§3.4).
 
 ## 2. Sample selection
 
@@ -172,14 +175,25 @@ survey's information content is the tightening below that value. A
 secondary threshold ceiling (smallest factor with S < 0.5 × S(90°)) is
 tabulated for comparison with prior single-system work.
 
-### 3.4 Catalog-artifact classes found and guarded
+### 3.4 Catalog-parameter pitfalls guarded against
+
+Three recurring pitfalls in catalog parameters, each encountered because
+it broke an analysis during survey development, are guarded against as
+follows:
+
 1. Eccentricity point-estimates dynamically inconsistent with system
    survival (Barnard's star: e = 0.03–0.08 kills the system in kyr;
-   e drawn within errors resolves it).
+   e drawn within errors resolves it — independently established by
+   Basant et al. 2025, whose fits favor e < 0.02). Guard: sample within
+   uncertainties, never integrate point values alone (§3.1).
 2. Composite tables (pscomppars) mix parameters across incompatible fits —
-   fatal for phase-coherent (resonant) initialization.
+   fatal for phase-coherent (resonant) initialization. Guard: randomize
+   phases for composite parameters; use fit phases only from
+   single-reference sets (§3.1).
 3. Fit epochs stored in the time-of-periastron column (GJ 876/Rivera
-   2010), producing degenerate all-simultaneous-periastron phases.
+   2010): read naively, the column implies all planets at periastron
+   simultaneously. Guard: reject identical periastron times across a
+   system before using any phase information.
 
 ## 4. Validation
 
@@ -187,7 +201,9 @@ The pipeline is validated against two systems whose stability constraints
 are independently known, chosen to bracket the two dynamical regimes the
 survey encounters: a resonance-protected system whose survival depends on
 its orbital phases (GJ 876) and a near-resonant system that is stable
-regardless of them (HD 45364).
+regardless of them (HD 45364). A third, external cross-check appears in
+§5.1: for Barnard's star, the survey's ceilings agree with the
+independent stability-derived masses of Byrne et al. (2026).
 
 ### 4.1 GJ 876: the phase-protected anchor
 
@@ -256,10 +272,15 @@ with a median limit of 2.68× among them (Figure: floor_vs_ceiling_final).
 Twenty-five giants whose face-on orientations would have exceeded the
 deuterium-burning limit are certified planetary at 95% credibility.
 Individual highlights: Barnard's star's four sub-Earths are capped at
-2.18× their minimum masses; 47 UMa at 2.35×; HD 141399's four giants at
-2.71×; and K2-18 c, the non-transiting companion of the habitable-zone
+2.18× their minimum masses (0.42–0.73 M_earth) — consistent with, and
+independently confirming, the stability-derived masses of 0.19–0.84
+M_earth in Byrne et al. (2026); 47 UMa at 2.35×; HD 141399's four giants
+at 2.71×; and K2-18 c, the non-transiting companion of the habitable-zone
 sub-Neptune K2-18 b, at 2.87× ≈ 21.6 M_earth, excluding a giant-planet
-identity. The tightest factor in the catalog is a caution against
+identity. (The isotropic prior is conservative for K2-18 c: because
+K2-18 b transits, only a small mutual inclination is required for c to
+avoid transiting, so near-edge-on orientations are likely a priori;
+Cloutier et al. 2017.) The tightest factor in the catalog is a caution against
 conflating the two headline statistics: TYC 1422-614-1's pair is capped
 at 2.01× — the survey's strongest relative constraint — yet planet c's
 minimum mass of 10 M_Jup puts even that ceiling at ≈20 M_Jup, above the

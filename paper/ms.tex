@@ -11,34 +11,37 @@
 
 \begin{document}
 
-\title{Dynamics as a Scale: A Homogeneous Survey of Stability-Derived
-True-Mass Limits for Non-Transiting Radial-Velocity Exoplanets}
+\title{Stability-Derived Upper Limits on the True Masses of Non-Transiting
+Radial-Velocity Planets: A Homogeneous $N$-body Survey}
 
 \author{Shaurya Ranjan}
 \affiliation{Independent Researcher}
 \email{shauryaranjan911@gmail.com}
 
 \begin{abstract}
-Radial-velocity detections constrain only the minimum mass $\msini$ of a
-planet; the true mass can exceed it by an arbitrary factor for face-on
-orbits. In multi-planet systems, however, long-term dynamical stability
-bounds that factor: heavier, more face-on configurations perturb their
-neighbors strongly enough to self-destruct within the system's lifetime.
-Discovery papers occasionally apply this constraint to individual systems
-with heterogeneous methods; no uniform survey exists. We present a
-homogeneous $N$-body stability survey of 56 multi-planet RV systems drawn
-from the NASA Exoplanet Archive, sweeping each system's line-of-sight
-inclination and sampling all orbital parameters within their published
-uncertainties. We validate the pipeline against GJ~876, recovering the
-literature stability constraint ($i > 25\arcdeg$ vs.\ published
-$i \gtrsim 20\arcdeg$). We report 95\% credible true-mass upper limits
-under an isotropic orientation prior for 123 planets in 53 systems: 61
-planets in 23 systems are tightened below 3.0 times their minimum masses
-(median limit $2.68\times$ among them), and 25 giant planets are
-certified below the deuterium-burning limit by dynamics alone. The pipeline additionally documents, and guards
-against, three classes of catalog-parameter pitfalls that dynamical
-consistency exposes, including published eccentricity point-estimates
-incompatible with the survival of their own systems.
+The radial-velocity method measures a planet's minimum mass, $\msini$, but
+leaves the orbital inclination $i$, and therefore the true mass,
+unconstrained. In a multi-planet system, long-term dynamical stability
+supplies the missing bound. Because each planet's true mass scales as
+$1/\sin i$, a system viewed near face-on contains heavier planets that
+perturb one another more strongly, and above some inclination the
+configuration no longer survives for the age of the system. The surviving
+range of inclinations therefore sets an upper limit on each planet's true
+mass. This argument has been applied to individual systems with a variety
+of methods, but no uniform survey exists. We carry out a homogeneous
+$N$-body stability survey of 56 multi-planet radial-velocity systems drawn
+from the NASA Exoplanet Archive. For each system we sweep the
+line-of-sight inclination over a fixed grid and sample all orbital
+parameters within their published uncertainties. We validate the pipeline
+on GJ~876, recovering the published stability constraint ($i > 25\arcdeg$,
+against the literature value $i \gtrsim 20\arcdeg$). Under an isotropic
+prior on orientation we derive 95\% credible upper limits on the true mass
+of 123 planets in 53 systems. For 61 planets in 23 systems the limit falls
+below $3.0\,\msini$, tighter than geometry alone provides (median
+$2.68\,\msini$), and 25 giant planets are confined below the
+deuterium-burning limit on dynamical grounds. We also document three ways
+in which tabulated catalog parameters can be dynamically inconsistent, and
+describe how the survey guards against each.
 \end{abstract}
 
 % TODO: verify UAT concept numbers at submission
@@ -47,337 +50,361 @@ simulations --- Radial velocity}
 
 \section{Introduction} \label{sec:intro}
 
-The radial-velocity method measures a planet's gravitational reflex along
-the line of sight only, leaving the orbital inclination $i$ unconstrained
-and delivering the minimum mass $\msini$ rather than the mass. For an
-isotropic distribution of orientations the correction is usually modest
---- the median of $1/\sin i$ is 1.15, and 95\% of orientations imply a
-true mass below $3.2\,\msini$ --- but for any individual planet the
-catalog value is a floor, not a measurement. The consequences propagate
-into everything built on RV masses: mass functions and occurrence rates
-inherit a one-sided bias, the planet/brown-dwarf boundary is porous for
-every giant whose $1/\sin i$ could exceed $\sim$$13\,\mjup/(\msini)$, and
-models of individual systems' formation and composition rest on lower
-limits treated, in practice, as values.
+The radial-velocity method detects a planet through the reflex motion it
+induces in its host star along the line of sight. This motion fixes the
+product $\msini$, where $m$ is the planet mass and $i$ the orbital
+inclination, but not $m$ itself. For a randomly oriented orbit the
+correction from $\msini$ to $m$ is usually small: the median value of
+$1/\sin i$ is 1.15, and 95\% of orientations give a true mass below
+$3.2\,\msini$. For any individual planet, however, $\msini$ is a lower
+bound rather than a measurement. This one-sided uncertainty propagates
+into quantities built on radial-velocity masses. Mass functions and
+occurrence rates are biased low; the boundary between planets and brown
+dwarfs is ambiguous for any giant whose true mass could exceed $13\,\mjup$;
+and inferences about the formation and composition of individual systems
+often treat a lower limit as if it were the mass.
 
-In multi-planet systems, dynamics supplies the missing upper bound. A
-coplanar system tilted toward face-on hides planets that are heavier by
-$1/\sin i$; heavier planets perturb one another more strongly; and
-sufficiently heavy versions destabilize on timescales far shorter than
-the systems' ages. Configurations that cannot survive to the present are
-excluded, so the survival requirement converts each system's continued
-existence into a ceiling on its planets' true masses. The idea is not
-new: discovery papers have long applied stability cuts to individual
-systems (GJ~876 being the canonical example; e.g.,
-\citealt{Gozdziewski2002} for 47~UMa; \citealt{Vogt2014} for HD~141399;
-\citealt{Basant2025} for Barnard's star), and
-\citet{Tamayo2021} developed stability-constrained characterization into
-a general method, applied to the transiting system Kepler-23. What does
-not exist is uniformity. \citet{LaskarPetit2017} classified 131 systems
-by AMD-stability but did not invert stability into per-planet mass
-limits; \citet{Volpi2019} constrained mutual inclinations of ten RV
-systems with first-order secular theory; \citet{Qin2025} propose
-breaking the degeneracy through von Zeipel--Lidov--Kozai cycle
-monitoring in compact binaries; the remaining literature is a
-scatter of single-system analyses with mutually incompatible integrators,
-instability criteria, timescales, and statistical definitions. No two of
-their mass limits are comparable, and no population statement can be
-assembled from them.
+In a system of two or more planets, dynamics provides the upper bound that
+the radial-velocity data lack. Consider a coplanar system tilted as a
+rigid body toward a face-on orientation. Its internal dynamics are
+unchanged, but every $\msini$ mass increases as $1/\sin i$. Heavier
+planets exert stronger mutual perturbations, and for a sufficiently
+face-on orientation the system becomes unstable on a timescale far shorter
+than its age. Such configurations cannot describe a system that is
+observed to exist today, so the requirement of long-term survival places a
+ceiling on each planet's true mass. This argument is well established for
+individual systems. GJ~876 is the canonical example; stability has also
+been used to constrain 47~UMa \citep{Gozdziewski2002}, HD~141399
+\citep{Vogt2014}, and Barnard's star \citep{Basant2025}, and
+\citet{Tamayo2021} developed it into a general method for
+stability-constrained characterization, which they applied to Kepler-23.
+What has been missing is a uniform treatment. \citet{LaskarPetit2017}
+classified 131 systems by AMD stability but did not convert stability into
+per-planet mass limits; \citet{Volpi2019} used first-order secular theory
+to bound the mutual inclinations of ten radial-velocity systems; and
+\citet{Qin2025} propose recovering inclinations from
+von~Zeipel--Lidov--Kozai cycles in compact binaries. The remaining
+literature consists of single-system analyses that adopt different
+integrators, instability criteria, integration times, and statistical
+definitions, so their mass limits cannot be compared and no
+population-level statement can be drawn from them.
 
-This paper presents the first homogeneous survey: one pipeline, one
-instability criterion, one statistical definition, applied to every
-qualifying multi-planet RV system in the NASA Exoplanet Archive, with
-orbital parameters sampled within their published uncertainties and the
-machinery validated against systems whose stability constraints are
-independently known. We report 95\% credible true-mass limits under an
-isotropic orientation prior for the planets of 56 systems, a byproduct
-catalog of parameter-consistency flags, and --- as a methodological
-contribution in its own right --- three classes of catalog-parameter
-pitfalls that dynamical auditing exposes (\S\ref{sec:artifacts}).
+This paper presents a homogeneous survey that applies one pipeline, one
+instability criterion, and one statistical definition to every qualifying
+multi-planet radial-velocity system in the NASA Exoplanet Archive. Orbital
+parameters are sampled within their published uncertainties, and the
+pipeline is validated against systems whose stability constraints are
+already known. We report 95\% credible upper limits on true mass under an
+isotropic orientation prior, a set of systems flagged as
+parameter-inconsistent, and three classes of catalog-parameter pitfall
+that the dynamical treatment exposes (\S\ref{sec:artifacts}).
 
 \section{Sample Selection} \label{sec:sample}
 
-We select systems from the NASA Exoplanet Archive's composite parameters
-table (\texttt{pscomppars}, accessed 2026 July 9--13) requiring at least
-two planets, periods and masses for all of them, a stellar mass, and at
-least one non-transiting planet whose mass provenance is $\msini$ --- the
-planets the survey can constrain. Because dynamical interactions weaken
-steeply with separation, we further require at least one adjacent pair
-with a period ratio below 6. This yields 148 qualifying systems.
+We draw candidate systems from the composite parameters table
+(\texttt{pscomppars}) of the NASA Exoplanet Archive, accessed 2026
+July 9--13. A system qualifies if it contains at least two planets with
+measured periods and masses, has a measured stellar mass, and contains at
+least one non-transiting planet whose tabulated mass is a minimum mass
+($\msini$); these are the planets the method can constrain. Because mutual
+perturbations weaken rapidly with orbital separation, we also require at
+least one adjacent planet pair with a period ratio below 6. These criteria
+yield 148 systems.
 
-Each system is ranked by an analytic pre-estimate of where its ceiling
-should lie: the swept mass factor $f_{\rm crit}$ at which the most
-fragile adjacent pair, with masses scaled by $f$ and separations measured
-in mutual Hill radii (eccentricity-reduced), reaches the two-planet
-overlap criterion $\Delta = 2\sqrt{3}$ \citep{Gladman1993}. Multi-planet
-systems destabilize at wider spacings, so $f_{\rm crit}$ is conservative.
-The survey band takes $f_{\rm crit} \in (1.05, 60)$ with
-$e_{\rm max} \le 0.75$ and $P_{\rm inner} \ge 1.5$~d --- 56 systems. The
-excluded $f_{\rm crit} \approx 1$ block is dominated by
-resonance-protected pairs whose survival depends on phase coherence that
-composite catalog parameters cannot supply
-(\S\ref{sec:artifacts}, \S\ref{sec:discussion}); it is deferred rather
-than constrained. Table~\ref{tab:dispositions} gives the full disposition
-of all 148 systems: 53 surveyed, 3 flagged, and 92 excluded (42
-resonance-protected, 48 too weakly interacting for dynamics to bite at
-any allowed mass, and 9 with sub-1.5-day inner periods, categories
-overlapping).
+We rank each system by an analytic estimate of the mass factor at which it
+should become unstable. For the most fragile adjacent pair, with masses
+scaled by a common factor $f$ and separation measured in
+eccentricity-reduced mutual Hill radii, we find the value $f_{\rm crit}$
+at which the pair reaches the two-planet overlap boundary
+$\Delta = 2\sqrt{3}$ \citep{Gladman1993}. Systems of more than two planets
+destabilize at wider spacings, so $f_{\rm crit}$ overestimates the true
+ceiling and is therefore a conservative selection criterion. We survey the
+band $1.05 < f_{\rm crit} < 60$ with maximum eccentricity
+$e_{\rm max} \le 0.75$ and inner-planet period $P_{\rm inner} \ge 1.5$~d,
+which contains 56 systems. Systems with $f_{\rm crit} \approx 1$ are
+excluded: this group is dominated by resonant and near-resonant pairs
+whose survival depends on the relative orbital phases, information that the
+composite catalog does not supply reliably (\S\ref{sec:artifacts},
+\S\ref{sec:discussion}). Table~\ref{tab:dispositions} lists the
+disposition of all 148 systems: 53 surveyed, 3 flagged as
+parameter-inconsistent, and 92 excluded. The excluded systems are
+resonance-protected (42), too weakly interacting for stability to
+constrain the mass at any allowed value (48), or have an inner period
+below 1.5~d (9), with some systems in more than one category.
 
 \section{Methods} \label{sec:methods}
 
 \subsection{Configuration Sampling} \label{sec:sampling}
 
-A coplanar system tilted rigidly with respect to the line of sight leaves
-its internal dynamics unchanged while every $\msini$ mass scales as
-$1/\sin i$; we therefore sweep $i$ over a 17-point grid from $90\arcdeg$
-(edge-on, masses at their floors) to $5\arcdeg$ (masses at $11.5\times$
-the floors), holding planets with transiting or astrometric true masses
-fixed. At each grid point we integrate 20 independent realizations,
-drawing the stellar mass and every planet's mass, period, eccentricity,
-and periastron longitude from truncated normal distributions built on the
-symmetrized catalog $1\sigma$ uncertainties (point values where errors
-are unreported; eccentricities truncated to $[0, 0.95]$). Unknown angles
-are drawn uniformly. Orbital phases are randomized for composite-catalog
-systems and taken from the fit's time of periastron only for
-single-reference parameter sets, for the reasons documented in
-\S\ref{sec:artifacts}.
+Tilting a coplanar system rigidly with respect to the line of sight
+changes the inferred masses but not the internal dynamics: every $\msini$
+mass scales as $1/\sin i$ while all mutual angles are preserved. We
+therefore treat inclination as the single swept parameter. We sample $i$
+on a 17-point grid from $90\arcdeg$ (edge-on, masses at their minimum
+values) to $5\arcdeg$ (masses at 11.5 times the minimum). Planets with a
+true mass known from a transit or from astrometry are held fixed. At each
+grid point we integrate 20 independent realizations. In each realization
+we draw the stellar mass and every planet's mass, period, eccentricity,
+and argument of periastron from truncated normal distributions defined by
+the symmetrized $1\sigma$ catalog uncertainties; where an uncertainty is
+not tabulated we use the point value, and eccentricities are truncated to
+$[0, 0.95]$. Angles the catalog does not report are drawn uniformly.
+Orbital phases are randomized for systems whose parameters are assembled
+from multiple references, and taken from the fitted time of periastron
+only for systems with a single self-consistent reference, for the reasons
+given in \S\ref{sec:artifacts}.
 
 \subsection{Integration and Instability Criterion} \label{sec:integration}
 
-Realizations are integrated with \textsc{rebound}'s WHFast
-\citep{ReinLiu2012, ReinTamayo2015} with timestep
-$dt = \min_p P_p (1-e_p)^{3/2} / 20$, resolving the fastest perihelion
-passage. Instability is a close encounter within the sum of Hill radii
-(particles carry their Hill radius as collision radius) or escape beyond
-20 times the widest semi-major axis. Integration time is uniform in
-inner-planet orbits --- $10^5$ and $10^6$ for the two survey depths ---
-making the effort per system architecture-independent; convergence
-between the depths is examined in \S\ref{sec:depth}. Sensitivity of the
-final limits to these choices is quantified on a six-system
-representative subset spanning the survey's architectures: halving $dt$
-changes 95\% credible limits by $\le 0.03$ in the mass factor; collision
-radii scaled to $0.5\times$ and $0.25\times$ the Hill radius change them
-by $\le 0.08$; replacing exact coplanarity with mutual inclinations drawn
-from Rayleigh distributions of $\sigma = 2\arcdeg$ and $5\arcdeg$ changes
-them by $\le 0.4$. None approaches the survey's grid resolution in $i$.
+We integrate each realization with the WHFast symplectic integrator
+\citep{ReinTamayo2015} in the \textsc{rebound} package \citep{ReinLiu2012}.
+The timestep is $dt = \min_p P_p (1-e_p)^{3/2} / 20$, one-twentieth of the
+shortest perihelion passage time in the system, which keeps the fastest
+pericenter well resolved. A realization is recorded as unstable if any two
+bodies approach within the sum of their Hill radii (each body carries its
+Hill radius as a collision radius) or if any body moves beyond 20 times
+the widest semi-major axis. Each realization is integrated for a fixed
+number of inner-planet orbital periods rather than a fixed physical time,
+so the computational cost per system does not depend on the absolute scale
+of the system. We use two depths, $10^5$ and $10^6$ inner orbits;
+\S\ref{sec:depth} compares them.
+
+We test the sensitivity of the limits to these choices on a representative
+subset of six systems that span the survey's range of architectures.
+Halving the timestep changes the 95\% credible limits by at most 0.03 in
+the mass factor. Reducing the collision radius to 0.5 and 0.25 times the
+Hill radius changes them by at most 0.08. Replacing exact coplanarity with
+mutual inclinations drawn from Rayleigh distributions of width
+$\sigma = 2\arcdeg$ and $5\arcdeg$ changes them by at most 0.4. None of
+these shifts exceeds the grid spacing in inclination.
 
 \subsection{Statistical Definitions} \label{sec:stats}
 
-Each system yields a survival curve $S(i)$, the fraction of realizations
-surviving to $t_{\rm max}$ at inclination $i$. Because parameter draws
-can be fragile at any tilt, constraints are defined relative to the
-edge-on baseline: systems with $S(90\arcdeg) < 0.5$ are reported as
-parameter-consistency flags --- statements about the published
-parameters, not mass limits. For unflagged systems the primary statistic
-is the 95\% credible limit on the mass factor under an isotropic
-orientation prior (uniform in $\cos i$), with posterior density
-proportional to $S(i)$: the factor below which 95\% of the surviving
-posterior lies. With no dynamical information this limit is 3.20 for
-every RV planet; the survey's information content is the tightening below
-that value. A secondary threshold ceiling (smallest factor with
-$S < 0.5 \times S(90\arcdeg)$) is tabulated for comparison with prior
-single-system work.
+For each system we construct a survival curve $S(i)$, the fraction of the
+20 realizations at inclination $i$ that remain stable to $t_{\rm max}$. We
+define the constraint relative to the edge-on value $S(90\arcdeg)$,
+because a system whose published parameters are already marginal can fail
+even at edge-on orientations. A system with $S(90\arcdeg) < 0.5$ is
+reported as a parameter-consistency flag: its result describes the
+published parameters, not a mass limit. For the remaining systems we
+report a 95\% credible upper limit on the mass factor under an isotropic
+prior on orientation (uniform in $\cos i$), taking the posterior density
+proportional to $S(i)$; the quoted limit is the mass factor below which
+95\% of the surviving posterior lies. With no dynamical information this
+limit equals 3.20 for every planet, so values below 3.20 measure the
+information the survey adds. For comparison with earlier single-system
+work we also tabulate a threshold ceiling, defined as the smallest mass
+factor at which $S$ falls below half its edge-on value.
 
 \subsection{Catalog-Parameter Pitfalls Guarded Against}
 \label{sec:artifacts}
 
-Three recurring pitfalls in catalog parameters, each encountered because
-it broke an analysis during survey development, are guarded against as
-follows.
+During development we encountered three recurring ways in which tabulated
+catalog parameters can be dynamically inconsistent. The survey guards
+against each.
 
 \begin{enumerate}
-\item Eccentricity point-estimates dynamically inconsistent with system
-survival (Barnard's star: $e = 0.03$--$0.08$ kills the system in kyr;
-$e$ drawn within errors resolves it --- independently established by
-\citealt{Basant2025}, whose fits favor $e < 0.02$). Guard: sample within
-uncertainties, never integrate point values alone (\S\ref{sec:sampling}).
-\item Composite tables (\texttt{pscomppars}) mix parameters across
-incompatible fits --- fatal for phase-coherent (resonant)
-initialization. Guard: randomize phases for composite parameters; use
-fit phases only from single-reference sets (\S\ref{sec:sampling}).
-\item Fit epochs stored in the time-of-periastron column
-\citep[GJ~876;][]{Rivera2010}: read naively, the column implies all
-planets at periastron simultaneously. Guard: reject identical periastron
-times across a system before using any phase information.
+\item \textit{Eccentricity point estimates incompatible with survival.}
+Compact systems are often fit with small, poorly constrained
+eccentricities whose point values nonetheless destabilize the system when
+integrated directly. For Barnard's star the tabulated values
+$e = 0.03$--$0.08$ destroy the system within a few thousand years, whereas
+eccentricities drawn from within the quoted uncertainties do not; the same
+conclusion was reached independently by \citet{Basant2025}, whose fits
+favor $e < 0.02$. We therefore sample eccentricities within their
+uncertainties and never integrate the point values alone
+(\S\ref{sec:sampling}).
+\item \textit{Composite parameters from incompatible fits.} The
+\texttt{pscomppars} table assembles each parameter from the best available
+source, so a single system can combine values from different fits. For
+resonant systems this destroys the phase relationships on which stability
+depends. We randomize the orbital phases of such systems and take fitted
+phases only from a single self-consistent reference (\S\ref{sec:sampling}).
+\item \textit{Fit epochs recorded as periastron times.} For some
+references the tabulated time of periastron is the epoch of the fit, which
+is identical for every planet and, if read literally, places all planets
+at periastron simultaneously (GJ~876; \citealt{Rivera2010}). We reject a
+system's periastron times when they are identical across its planets
+before using any phase information.
 \end{enumerate}
 
 \section{Validation} \label{sec:validation}
 
-The pipeline is validated against two systems whose stability constraints
-are independently known, chosen to bracket the two dynamical regimes the
-survey encounters: a resonance-protected system whose survival depends on
-its orbital phases (GJ~876) and a near-resonant system that is stable
-regardless of them (HD~45364). A third, external cross-check appears in
-\S\ref{sec:catalog}: for Barnard's star, the survey's ceilings agree with
-the independent stability-derived masses of \citet{Byrne2026}.
+We validate the pipeline on two systems chosen to bracket the two
+dynamical regimes it encounters: GJ~876, whose survival depends on the
+relative phases of a mean-motion resonance, and HD~45364, which is stable
+independently of its phases. A third, external check appears in
+\S\ref{sec:catalog}, where the survey's mass ceilings for Barnard's star
+are compared with the independent stability masses of \citet{Byrne2026}.
 
 \subsection{GJ 876: The Phase-Protected Anchor} \label{sec:gj876}
 
-GJ~876 is the canonical stability-constrained system. The Archive's
-default solution is the coplanar dynamical fit of \citet{Rivera2010} at
-$i = 59\arcdeg$: true masses, with the phases of the 4:2:1 Laplace
-resonance at their libration center. We reconstruct the equivalent
-minimum-mass system by scaling the fitted masses by $\sin 59\arcdeg$, fix
-the mean anomalies at the fit epoch to the published values (their
-Table~3 --- the Archive's time-of-periastron column stores the epoch
-itself for this reference, artifact Class~3 of \S\ref{sec:artifacts}, so
-phases cannot be derived from it), and sweep a 13-point inclination grid
-with phases held fixed (5 draws per point, 5{,}000~yr per realization
-$\approx 10^6$ inner-planet orbits).
+GJ~876 is the standard test case for stability-constrained
+characterization. The Archive's default solution is the coplanar fit of
+\citet{Rivera2010} at $i = 59\arcdeg$, which lists true masses and places
+the 4:2:1 Laplace resonance at the center of its libration. We reconstruct
+the equivalent minimum-mass system by scaling the fitted masses by
+$\sin 59\arcdeg$ and fix the mean anomalies to the values in their
+Table~3. For this reference the Archive's time-of-periastron column holds
+the epoch of the fit rather than a per-planet periastron passage (pitfall
+3 of \S\ref{sec:artifacts}), so the phases must be taken from the paper.
+We then sweep a 13-point inclination grid with the phases held fixed,
+using 5 realizations per grid point and 5{,}000~yr ($\approx 10^6$ inner
+orbits) per realization.
 
-The validation makes three independent demands
-(Figure~\ref{fig:validation}). First, the published configuration,
-entering the sweep at mass factor $1/\sin 59\arcdeg = 1.17$, must
-survive: it does. Second, the recovered constraint must match the
-literature: survival is zero at every grid inclination at or below
-$25\arcdeg$ and recovers above it, giving $i > 25\arcdeg$
-($m < 2.37\times\msini$) against the published $i \gtrsim 20\arcdeg$ ---
-consistent, and conservative in the safe direction. Third, the same
-masses with randomized phases must not reliably survive, or phase
-protection would be irrelevant to the problem: survival collapses to
-12\%. The resonance protection is real, and the phase-constrained
-initialization captures it.
+The test has three requirements (Figure~\ref{fig:validation}). First, the
+published configuration, which enters the sweep at mass factor
+$1/\sin 59\arcdeg = 1.17$, must survive; it does. Second, the recovered
+ceiling must match the published constraint: survival is zero for all grid
+inclinations at or below $25\arcdeg$ and nonzero above, giving
+$i > 25\arcdeg$ ($m < 2.37\,\msini$), consistent with and slightly more
+conservative than the literature value $i \gtrsim 20\arcdeg$. Third, the
+same masses with randomized phases must not remain stable, since otherwise
+resonant protection would play no role; survival falls to 12\%. The
+pipeline thus reproduces both the resonant protection and the known
+inclination limit.
 
 \subsection{HD 45364: The Phase-Agnostic Anchor} \label{sec:hd45364}
 
-HD~45364 anchors the opposite regime. Its two giants sit in a 3:2
+HD~45364 tests the opposite regime. Its two giant planets lie in a 3:2
 commensurability with low eccentricities \citep{Correia2009}, and the
-\citet{Li2022} solution is stable without phase assistance: initialized
-with the fit's own phases, the published configuration survives the full
-$10^5$~yr integration, and randomizing the phases leaves survival at
-100\% --- the constraint owes nothing to resonance protection. The
-survival cliff is correspondingly smooth rather than resonance-sharpened:
-complete survival for $i \ge 45\arcdeg$, declining to zero by
-$i \approx 8.5\arcdeg$ (17-point grid, 10 draws per point), integrating
-under the isotropic prior to a 95\% credible limit of
-$m < 2.29\times\msini$. Together the anchors bracket the survey
-population --- one ceiling that exists because of its phases, one
-indifferent to them --- and the same pipeline recovers both with no
-per-system tuning.
+\citet{Li2022} solution is stable without help from resonant phases.
+Initialized with the fitted phases, the published configuration survives
+the full $10^5$~yr integration, and randomizing the phases leaves survival
+unchanged at 100\%. The survival curve is correspondingly smooth rather
+than sharpened by resonance: complete survival for $i \ge 45\arcdeg$
+falling to zero by $i \approx 8.5\arcdeg$ (17-point grid, 10 realizations
+per point). Under the isotropic prior this gives a 95\% credible limit of
+$m < 2.29\,\msini$. The two anchors bracket the survey population, one
+system constrained by its phases and one independent of them, and the
+pipeline reproduces both without any per-system adjustment.
 
 \subsection{Depth Convergence} \label{sec:depth}
 
-A survey whose limits depended on integration length would be reporting
-its clock, not the dynamics. Every system therefore runs at two depths,
-$10^5$ and $10^6$ inner orbits, with identical parameter draws (seeds
-keyed to the system name), and the threshold ceilings are compared.
-Deeper integration can only reveal instability, never undo it, so
-ceilings must move one way --- and they do: among the 53 unflagged
-systems (flagged systems excluded at either depth), 9 ceilings tightened,
-5 held exactly, none loosened, and 7 systems acquired a ceiling only at
-$10^6$ (Figure~\ref{fig:depth}). This is the third consecutive survey
-generation with strictly monotone behavior, and it is what makes the
-reported limits conservative: a longer clock can only strengthen them
-(\S\ref{sec:discussion}). \textbf{[PENDING: $10^7$-orbit extension of the
-16 non-converged systems --- run launched 2026-07-14.]}
+Because we integrate for a fixed number of orbits rather than to a
+physical age, we must show that the reported limits reflect the dynamics
+and not the integration length. We therefore run every system at two
+depths, $10^5$ and $10^6$ inner orbits, using identical parameter draws
+(the random seed is fixed by the system name), and compare the threshold
+ceilings. A longer integration can only reveal additional instability, so
+the ceilings should move in one direction. They do: among the 53 unflagged
+systems, 9 ceilings tighten between the two depths, 5 are unchanged, none
+loosen, and 7 systems that show no ceiling at $10^5$ orbits acquire one at
+$10^6$ (Figure~\ref{fig:depth}). This is the third successive generation
+of the survey to show strictly one-directional behavior, which is what
+allows us to describe the reported limits as conservative: a longer
+integration can only strengthen them (\S\ref{sec:discussion}).
+\textbf{[PENDING: extension of the 16 non-converged systems to $10^7$
+orbits, launched 2026-07-14.]}
 
 \section{Results} \label{sec:results}
 
 \subsection{The Catalog} \label{sec:catalog}
 
-Of the 56 surveyed systems, 53 pass the edge-on consistency test and
-yield 95\% credible mass limits for 123 non-transiting planets
-(Table~\ref{tab:limits}; Figure~\ref{fig:dumbbells}). Sixty-one planets
-in 23 systems are dynamically tightened below $3.0\times$ their minimum
-masses --- meaningfully inside the $3.20\times$ that isotropy alone
-guarantees --- with a median limit of $2.68\times$ among them.
-Twenty-five giants whose face-on orientations would have exceeded the
-deuterium-burning limit are certified planetary at 95\% credibility.
-Individual highlights: Barnard's star's four sub-Earths are capped at
-$2.18\times$ their minimum masses (0.42--0.73\,$\mearth$) --- consistent
-with, and independently confirming, the stability-derived masses of
-0.19--0.84\,$\mearth$ in \citet{Byrne2026}; 47~UMa at $2.35\times$;
-HD~141399's four giants at $2.71\times$; and K2-18~c, the non-transiting
-companion of the habitable-zone sub-Neptune K2-18~b, at
-$2.87\times \approx 21.6\,\mearth$, excluding a giant-planet identity.
-(The isotropic prior is conservative for K2-18~c: because K2-18~b
-transits, only a small mutual inclination is required for c to avoid
-transiting, so near-edge-on orientations are likely a priori;
-\citealt{Cloutier2017}.) The tightest factor in
-the catalog is a caution against conflating the two headline statistics:
-TYC~1422-614-1's pair is capped at $2.01\times$ --- the survey's
-strongest relative constraint --- yet planet~c's minimum mass of
-$10\,\mjup$ puts even that ceiling at $\approx$$20\,\mjup$, above the
-deuterium-burning limit. A tight mass factor and a certified planetary
-identity are independent properties.
+Of the 56 systems in the survey band, 53 pass the edge-on consistency test
+and yield 95\% credible mass limits for 123 non-transiting planets
+(Table~\ref{tab:limits}; Figure~\ref{fig:dumbbells}). For 61 planets in 23
+systems the limit falls below $3.0\,\msini$, inside the value of 3.20 that
+geometry alone guarantees, with a median of $2.68\,\msini$ among them.
+Twenty-five giant planets whose face-on orientations would place them
+above the deuterium-burning limit are instead confined below it at 95\%
+credibility.
+
+Several individual results illustrate the range. The four sub-Earth
+planets of Barnard's star are limited to $2.18\,\msini$
+(0.42--0.73\,$\mearth$), in agreement with the independent stability
+masses of 0.19--0.84\,$\mearth$ reported by \citet{Byrne2026}. The three
+giant planets of 47~UMa are limited to $2.35\,\msini$ and the four giant
+planets of HD~141399 to $2.71\,\msini$. K2-18~c, the non-transiting
+companion of the habitable-zone sub-Neptune K2-18~b, is limited to
+$2.87\,\msini \approx 21.6\,\mearth$, which excludes a giant-planet mass.
+For K2-18~c the isotropic prior is conservative: because K2-18~b transits,
+only a small mutual inclination is needed for c to avoid transiting, so
+near-edge-on orientations are favored a priori \citep{Cloutier2017}.
+
+The tightest limit in the catalog shows that a small mass factor and a
+planetary-mass classification are separate properties. The pair around
+TYC~1422-614-1 is limited to $2.01\,\msini$, the strongest relative
+constraint in the survey, but the minimum mass of the outer planet is
+already $10\,\mjup$, so even this limit permits a mass of
+$\approx 20\,\mjup$, above the deuterium-burning limit.
 
 \subsection{Population Statement} \label{sec:population}
 
-The cumulative distribution of credible limits (Figure~\ref{fig:cdf})
-answers the survey's title question: exactly half the qualifying planets
-(61 of 123) have their permitted mass range tightened beyond geometry,
-the tightest fifth to below $\sim$$2.6\times$, and no limit exceeds the
-isotropic bound beyond the inclination grid's discretization (the single
-nominal exception, TOI-1062~c at $3.22\times$ against the analytic 3.20,
-is an unconstrained posterior rendered on the 17-point grid) --- dynamics
-only ever removes orientations. Read as demographics: for packed
-multi-planet RV systems, the ``hidden monster'' tail of the minimum-mass
-distribution is largely a geometric fiction; the surviving configurations
-concentrate near edge-on masses.
+Figure~\ref{fig:cdf} shows the cumulative distribution of the 123 credible
+limits. Half the sample (61 planets) is constrained below the geometric
+value of 3.20, and the tightest fifth below $2.6\,\msini$. No limit
+exceeds 3.20 by more than the discretization of the inclination grid; the
+single nominal exception, TOI-1062~c at 3.22, is an unconstrained
+posterior evaluated on the 17-point grid rather than a real excess. In
+population terms, for closely spaced multi-planet radial-velocity systems
+the high-mass tail implied by unconstrained orientation is largely
+removed: the surviving configurations cluster near the edge-on masses, so
+the true masses of these planets are typically close to their tabulated
+minimum values.
 
-\subsection{Parameter-Fragility Flags} \label{sec:flags}
+\subsection{Parameter-Consistency Flags} \label{sec:flags}
 
 Three systems fail the edge-on consistency test in more than half their
-parameter draws: GJ~667~C, HIP~57274, and Kepler-20. These are
-data-quality results, not mass limits: the published parameter sets, with
-their stated uncertainties, do not support long-lived configurations at
-any tilt. For GJ~667~C this echoes the long-standing dispute over its
-planet multiplicity; for the others it flags eccentricity solutions that
-their own dynamics reject. A joint dynamical--RV refit is the indicated
-follow-up in all three cases.
+realizations: GJ~667~C, HIP~57274, and Kepler-20. These are statements
+about the published parameters rather than mass limits: the tabulated
+parameters, with their quoted uncertainties, do not admit a long-lived
+configuration at any inclination. For GJ~667~C this is consistent with the
+long-standing debate over the number of planets in the system; for the
+other two it points to eccentricity solutions that are incompatible with
+their own dynamics. In each case the appropriate next step is a joint
+dynamical and radial-velocity refit.
 
 \section{Discussion} \label{sec:discussion}
 
 Three limitations bound the interpretation of the catalog. First, the
-sweep is coplanar: the system is tilted as a rigid unit, so mutual
-inclinations enter only through the sensitivity variants
-(\S\ref{sec:integration}), which shift the credible limits by at most
-$\sim$0.4 in the mass factor for dispersions up to $5\arcdeg$. Strongly
-non-coplanar architectures --- precisely those the von
-Zeipel--Lidov--Kozai literature targets --- are outside this survey's
-assumptions and their limits should be read as conditional on approximate
-coplanarity. Second, $10^6$ inner orbits is short against Gyr ages. Every
-depth comparison we have run --- three survey generations --- moved
-limits monotonically tighter or not at all, so the reported ceilings are
-conservative: longer clocks can only strengthen them. The converse claim
-(that a surviving configuration is stable forever) is never made. Third,
-the inputs are catalog parameters, sampled within symmetrized published
-uncertainties rather than refit from radial velocities. The
-parameter-fragility flags quantify where this matters most; for the
-flagged systems the correct next step is a joint refit, not a mass limit.
+inclination sweep is coplanar: each system is tilted as a rigid body, so
+mutual inclinations enter only through the sensitivity tests of
+\S\ref{sec:integration}, which shift the limits by at most 0.4 in the mass
+factor for dispersions up to $5\arcdeg$. Strongly non-coplanar systems,
+including those the von~Zeipel--Lidov--Kozai literature targets, fall
+outside our assumptions, and their limits should be read as conditional on
+approximate coplanarity. Second, $10^6$ inner orbits is short compared
+with the Gyr ages of these systems. Every depth comparison we have
+performed, across three generations of the survey, has moved the limits
+monotonically toward tighter values or left them unchanged, so the
+reported ceilings are conservative; we make no claim that a surviving
+configuration is stable indefinitely. Third, the inputs are catalog
+parameters sampled within their symmetrized uncertainties, not fits to the
+radial velocities themselves. The parameter-consistency flags identify
+where this matters most; for the flagged systems the correct next step is
+a joint refit rather than a mass limit.
 
-The excluded resonance-protected block (adjacent period ratios within a
-few percent of small-integer commensurabilities, screened out at
-selection) is addressable with the machinery validated on GJ~876:
-single-reference parameter sets carrying fit phases, initialized at the
-observed libration. Extending the survey across that block would add some
-of the most tightly packed --- and therefore most constrainable ---
-systems in the catalog.
+The excluded resonant systems, with adjacent period ratios within a few
+percent of a small-integer commensurability, can be treated with the same
+machinery validated on GJ~876, using single-reference parameters with
+their fitted phases initialized at the observed libration. Extending the
+survey to this group would add some of the most closely packed, and
+therefore most strongly constrained, systems in the Archive.
 
-The catalog has immediate uses beyond its headline statement. Planets
-whose dynamical ceiling sits close to their $\msini$ floor are the best
-targets for Gaia astrometric confirmation, since their permitted mass
-range is narrowest; planets whose ceiling crosses the deuterium-burning
-limit are certified planetary without further observation, cleaning
-brown-dwarf contamination out of the giant-planet mass function; and the
-parameter-fragility flags hand RV teams a prioritized list of systems
-whose published solutions their own data no longer support.
+The catalog has several direct applications. Planets whose dynamical
+ceiling lies close to their minimum mass have the narrowest permitted mass
+range and are the best targets for astrometric confirmation with Gaia.
+Planets whose ceiling falls below the deuterium-burning limit are
+established as planetary-mass without additional observations, which
+removes brown-dwarf contamination from the giant-planet mass function. The
+parameter-consistency flags identify systems whose published solutions are
+not supported by their own long-term dynamics and are candidates for
+reanalysis.
 
 \section{Data Availability} \label{sec:data}
 
 Code and per-run records are available at
-\url{https://github.com/Shaun2highh/dynamass}. Catalogs and per-run
-records will be archived at Zenodo \textbf{[TODO: DOI --- mint after
-RNAAS note acceptance]}. This work used the NASA Exoplanet Archive
-\texttt{pscomppars}
+\url{https://github.com/Shaun2highh/dynamass}. The catalogs and per-run
+records will be archived at Zenodo \textbf{[TODO: mint DOI at submission]}.
+This work used the NASA Exoplanet Archive \texttt{pscomppars}
 \dataset[(DOI: 10.26133/NEA13)]{https://doi.org/10.26133/NEA13} and
 \texttt{ps} \dataset[(DOI: 10.26133/NEA12)]{https://doi.org/10.26133/NEA12}
-tables, accessed 2026 July 9--13; we thank the Archive's maintainers,
-whose stewardship makes surveys like this possible.
+tables, accessed 2026 July 9--13. We thank the Archive's maintainers.
 
-Artificial-intelligence assistance (Claude, Anthropic) was used for code
-development and manuscript drafting; all results were independently
-verified and are the author's responsibility.
+Claude (Anthropic) was used to assist with code development and manuscript
+preparation. All results were independently verified by the author, who is
+responsible for their content.
 
 \software{\textsc{rebound} \citep{ReinLiu2012}, WHFast
 \citep{ReinTamayo2015}, \textsc{numpy}, \textsc{pandas},
@@ -389,19 +416,19 @@ verified and are the author's responsibility.
 \centering
 \includegraphics[width=0.48\textwidth]{gj_876_validation.png}
 \includegraphics[width=0.48\textwidth]{hd_45364_validation.png}
-\caption{Validation anchors. Left: GJ~876 survival vs.\ inclination with
-the \citet{Rivera2010} fit phases held fixed; survival is zero at
-$i \le 25\arcdeg$, recovering the literature constraint. Right:
-HD~45364 \citep{Li2022}: a smooth, phase-agnostic survival cliff
-(complete survival at $i \ge 45\arcdeg$, zero by $i \approx 8.5\arcdeg$).}
+\caption{Validation anchors. Left: GJ~876 survival fraction versus
+inclination with the \citet{Rivera2010} fit phases held fixed; survival is
+zero at $i \le 25\arcdeg$, recovering the literature constraint. Right:
+HD~45364 \citep{Li2022}, a smooth, phase-agnostic survival curve (complete
+survival at $i \ge 45\arcdeg$, zero by $i \approx 8.5\arcdeg$).}
 \label{fig:validation}
 \end{figure*}
 
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=0.9\textwidth]{floor_vs_ceiling_final.png}
-\caption{Mass floors ($\msini$) and 95\% credible dynamical ceilings for
-the 123 constrained planets of the 53 unflagged systems, sorted by
+\caption{Minimum masses ($\msini$) and 95\% credible dynamical ceilings
+for the 123 constrained planets of the 53 unflagged systems, sorted by
 credible mass factor. Flagged systems are excluded.}
 \label{fig:dumbbells}
 \end{figure*}
@@ -409,10 +436,10 @@ credible mass factor. Flagged systems are excluded.}
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=\columnwidth]{depth_convergence_prod.png}
-\caption{Depth convergence: per-system threshold ceilings at $10^5$ vs.\
-$10^6$ inner-planet orbits with identical parameter draws. Ceilings only
-tighten (9) or hold (5); 7 systems acquire a ceiling only at depth; none
-loosen.}
+\caption{Depth convergence: per-system threshold ceilings at $10^5$ versus
+$10^6$ inner-planet orbits with identical parameter draws. Ceilings
+tighten (9 systems) or are unchanged (5); 7 systems acquire a ceiling only
+at the greater depth; none loosen.}
 \label{fig:depth}
 \end{figure}
 
@@ -420,8 +447,8 @@ loosen.}
 \centering
 \includegraphics[width=\columnwidth]{m95_cdf_prod.png}
 \caption{Cumulative distribution of the 123 95\% credible mass-factor
-limits. The dashed line marks the isotropic-prior bound (3.20) that
-geometry alone guarantees; half the sample is tightened inside it.}
+limits. The dashed line marks the isotropic-prior value (3.20) that
+geometry alone guarantees; half the sample is constrained inside it.}
 \label{fig:cdf}
 \end{figure}
 
@@ -448,8 +475,8 @@ TOI-500        & excluded\tablenotemark{b} & 32.86 & \nodata & \nodata \\
 ($f_{\rm crit} \approx 1$).}
 \tablenotetext{b}{Inner period below 1.5~d.}
 \tablecomments{Disposition of all 148 qualifying systems: 53 surveyed, 3
-flagged (edge-on survival $< 0.5$), 92 excluded with reasons
-(resonance-protected, weakly interacting, or sub-1.5-day inner period).
+flagged (edge-on survival below 0.5), and 92 excluded with reasons
+(resonance-protected, weakly interacting, or inner period below 1.5~d).
 The full machine-readable table is available as
 \texttt{table1\_dispositions.csv}, regenerated by
 \texttt{scripts/make\_table1.py}.}
@@ -478,7 +505,7 @@ HIP 111909     & c & 257.4 & 2.33 & 601  \\
 95\% credible mass factor. The full machine-readable table
 (\texttt{table2\_planet\_limits.csv}, regenerated by
 \texttt{scripts/make\_table2.py}) additionally lists masses in $\mjup$,
-the secondary threshold ceiling, and the inclination floor.}
+the threshold ceiling, and the inclination floor.}
 \end{deluxetable}
 
 % ------------------------------------------------------------- references
@@ -493,9 +520,9 @@ Bonsor, A., et al. 2026, MNRAS, accepted (arXiv:2606.23310)
 Astudillo-Defru, N., Doyon, R., et al. 2017, A\&A, 608, A35
 \bibitem[Correia et al.(2009)]{Correia2009} Correia, A.~C.~M., Udry, S.,
 Mayor, M., et al. 2009, A\&A, 496, 521
+\bibitem[Gladman(1993)]{Gladman1993} Gladman, B. 1993, Icarus, 106, 247
 \bibitem[Go\'zdziewski(2002)]{Gozdziewski2002} Go\'zdziewski, K. 2002,
 A\&A, 393, 997
-\bibitem[Gladman(1993)]{Gladman1993} Gladman, B. 1993, Icarus, 106, 247
 \bibitem[Laskar \& Petit(2017)]{LaskarPetit2017} Laskar, J., \& Petit,
 A.~C. 2017, A\&A, 605, A72
 \bibitem[Li et al.(2022)]{Li2022} Li, Z., et al. 2022, AJ, 164, 163

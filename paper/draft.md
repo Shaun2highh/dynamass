@@ -257,8 +257,13 @@ none loosened, and 7 systems acquired a ceiling only at 10^6 (Figure:
 depth_convergence_prod.png). This is the third consecutive survey
 generation with strictly monotone behavior, and it is what makes the
 reported limits conservative: a longer clock can only strengthen them
-(§6). [PENDING: 10^7-orbit extension of the 16 non-converged systems —
-run launched 2026-07-14, results/survey_catalog_1e7_prod.csv.]
+(§6).
+
+As a stronger test, we re-ran at 10^7 inner orbits the 16 systems whose
+ceilings moved between 10^5 and 10^6. Of the 15 completed, 7 tightened
+further and 8 held; none loosened, so the one-directional behavior
+persists at 10× depth. [PENDING: L 98-59 still integrating —
+results/survey_catalog_1e7_prod.csv.]
 
 ## 5. Results
 

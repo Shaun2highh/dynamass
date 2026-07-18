@@ -260,10 +260,9 @@ reported limits conservative: a longer clock can only strengthen them
 (§6).
 
 As a stronger test, we re-ran at 10^7 inner orbits the 16 systems whose
-ceilings moved between 10^5 and 10^6. Of the 15 completed, 7 tightened
-further and 8 held; none loosened, so the one-directional behavior
-persists at 10× depth. [PENDING: L 98-59 still integrating —
-results/survey_catalog_1e7_prod.csv.]
+ceilings moved between 10^5 and 10^6. 8 tightened further and 8 held;
+none loosened, so the one-directional behavior persists at 10× depth
+(results/survey_catalog_1e7_prod.csv).
 
 ## 5. Results
 

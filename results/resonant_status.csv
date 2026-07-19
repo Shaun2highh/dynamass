@@ -1,0 +1,44 @@
+system,fetched,phased,ref,note
+24 Sex,True,True,Johnson et al. 2010,
+2MASS J19383260+4603591,True,True,Esmer et al. 2022,
+BD+20 2457,True,True,Niedzielski et al. 2009,
+BD-210397,True,True,Frensch et al. 2023,
+DMPP-1,False,False,,No single reference covers all planets of 'DMPP-1'
+DMPP-2,True,True,Standing et al. 2026,
+GJ 180,False,False,,No single reference covers all planets of 'GJ 180'
+GJ 3293,False,False,,No single reference covers all planets of 'GJ 3293'
+HD 102329,False,False,,No single reference covers all planets of 'HD 102329'
+HD 113538,True,True,Moutou et al. 2015,
+HD 114386,True,True,Wu et al. 2026,
+HD 116029,False,False,,No single reference covers all planets of 'HD 116029'
+HD 127195,False,False,,No single reference covers all planets of 'HD 127195'
+HD 128311,True,False,Rein 2015,no fit phases (pitfall 3 or missing tper)
+HD 133131 A,True,False,Teske et al. 2016,no fit phases (pitfall 3 or missing tper)
+HD 1461,False,False,,No single reference covers all planets of 'HD 1461'
+HD 153557,True,True,Feng et al. 2022,
+HD 155358,True,True,Robertson et al. 2012,
+HD 160691,True,True,Gozdziewski et al. 2007,
+HD 176986,False,False,,No single reference covers all planets of 'HD 176986'
+HD 200964,True,True,Luhn et al. 2019,
+HD 203387,True,False,Feng et al. 2022,no fit phases (pitfall 3 or missing tper)
+HD 204313,True,False,Feng et al. 2022,no fit phases (pitfall 3 or missing tper)
+HD 20794,False,False,,No single reference covers all planets of 'HD 20794'
+HD 33844,True,True,Wittenmyer et al. 2016,
+HD 34445,False,False,,No single reference covers all planets of 'HD 34445'
+HD 37124,True,True,Wright et al. 2011,
+HD 40307,False,False,,No single reference covers all planets of 'HD 40307'
+HD 45364,True,True,Li et al. 2022,
+HD 47366,True,True,Teng et al. 2023,
+HD 5319,True,True,Luhn et al. 2019,
+HD 73526,True,True,Wittenmyer et al. 2014,
+HD 81817,True,True,Feng et al. 2022,
+HD 93385,True,True,Unger et al. 2021,
+HD 99706,False,False,,No single reference covers all planets of 'HD 99706'
+HIP 54373,False,False,,No single reference covers all planets of 'HIP 54373'
+HIP 97166,False,False,,No single reference covers all planets of 'HIP 97166'
+K2-157,False,False,,No single reference covers all planets of 'K2-157'
+Kepler-100,False,False,,No single reference covers all planets of 'Kepler-100'
+NY Vir,True,True,Song et al. 2019,
+TIC 279401253,False,False,,No single reference covers all planets of 'TIC 279401253'
+gam Lib,True,True,Teng et al. 2023,
+ups And,True,True,Curiel et al. 2011,
